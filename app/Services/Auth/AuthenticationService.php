@@ -20,7 +20,7 @@ class AuthenticationService
         return 'home';
     }
 
-    public static function getHomeRoute(?User $user = null): string
+    public static function getHomeRoutePath(?User $user = null): string
     {
         $route = self::getHomeRouteName($user);
 

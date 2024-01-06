@@ -27,7 +27,7 @@ class VerificationController extends Controller
             }
 
             return $user->hasVerifiedEmail()
-                ? redirect()->intended(AuthenticationService::getHomeRoute())
+                ? redirect()->intended(AuthenticationService::getHomeRoutePath())
                 : view('auth.verify', compact('user'));
         } catch (\Exception $e) {
             dd($e->getMessage());
@@ -57,7 +57,7 @@ class VerificationController extends Controller
             }
 
             if ($user->hasVerifiedEmail()) {
-                return redirect()->intended(AuthenticationService::getHomeRoute() . '?verified=1');
+                return redirect()->intended(AuthenticationService::getHomeRoutePath() . '?verified=1');
             }
 
             $user->sendEmailVerificationNotification();

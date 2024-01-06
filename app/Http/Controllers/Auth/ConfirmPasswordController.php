@@ -30,6 +30,6 @@ class ConfirmPasswordController extends Controller
 
         $request->session()->passwordConfirmed();
 
-        return redirect()->intended(AuthenticationService::getHomeRoute());
+        return redirect()->intended(AuthenticationService::getHomeRoutePath());
     }
 }
