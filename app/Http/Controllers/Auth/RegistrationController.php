@@ -38,7 +38,9 @@ class RegistrationController extends Controller
                 'last_name' => 'nullable|string|max:50',
             ]);
 
-            event(new Registered($user = $this->authService->register($request)));
+            event(new Registered($user = $this->authService->register(
+                $request->name, $request->email, $request->password, $request->first_name, $request->last_name
+            )));
 
             Session::put('auth', ['email' => $user->email]);
 

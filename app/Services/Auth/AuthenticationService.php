@@ -32,22 +32,22 @@ class AuthenticationService
     /**
      * @throws \Throwable
      */
-    public function register(Request $request): User
+    public function register(string $name, string $email, string $password, ?string $firstName = null, ?string $lastName = null): User
     {
         DB::beginTransaction();
         try {
             $user = User::create([
-                'name' =>$request->name,
-                'email' => $request->email,
+                'name' =>$name,
+                'email' => $email,
                 'role' => User::ROLE_USER,
                 'status' => User::STATUS_WAIT,
-                'password' => Hash::make($request->password),
+                'password' => Hash::make($password),
                 'email_verify_token' => Str::uuid() . '_' . date('Y-m-d-H:i:s'),
             ]);
 
             $user->profile()->create([
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
+                'first_name' => $firstName,
+                'last_name' => $lastName,
             ]);
 
             DB::commit();
