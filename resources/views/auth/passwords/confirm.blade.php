@@ -5,14 +5,14 @@
 
     @section('classes_body', 'lockscreen')
 
-    @php( $password_reset_url = View::getSection('password_reset_url') ?? config('adminlte.password_reset_url', 'password/reset') )
-    @php( $dashboard_url = View::getSection('dashboard_url') ?? config('adminlte.dashboard_url', 'home') )
+    @php( $password_request_url = View::getSection('password_reset_url') ?? config('adminlte.password_request_url', 'password.email.request') )
+    @php( $dashboard_url = View::getSection('dashboard_url') ?? config('adminlte.dashboard_url', \App\Services\Auth\AuthenticationService::getHomeRouteName()) )
 
     @if (config('adminlte.use_route_url', false))
-        @php( $password_reset_url = $password_reset_url ? route($password_reset_url) : '' )
+        @php( $password_request_url = $password_request_url ? route($password_request_url) : '' )
         @php( $dashboard_url = $dashboard_url ? route($dashboard_url) : '' )
     @else
-        @php( $password_reset_url = $password_reset_url ? url($password_reset_url) : '' )
+        @php( $password_request_url = $password_request_url ? url($password_request_url) : '' )
         @php( $dashboard_url = $dashboard_url ? url($dashboard_url) : '' )
     @endif
 
@@ -47,7 +47,7 @@
                     <div class="input-group">
                         <input id="password" type="password" name="password"
                                class="form-control @error('password') is-invalid @enderror"
-                               placeholder="{{ __('adminlte::adminlte.password') }}" required autofocus>
+                               placeholder="{{ __('adminlte.password') }}" required autofocus>
 
                         <div class="input-group-append">
                             <button type="submit" class="btn">
@@ -68,13 +68,13 @@
 
             {{-- Help block --}}
             <div class="help-block text-center">
-                {{ __('adminlte::adminlte.confirm_password_message') }}
+                {{ __('adminlte.confirm_password_message') }}
             </div>
 
             {{-- Additional links --}}
             <div class="text-center">
-                <a href="{{ $password_reset_url }}">
-                    {{ __('adminlte::adminlte.i_forgot_my_password') }}
+                <a href="{{ $password_request_url }}">
+                    {{ __('adminlte.i_forgot_my_password') }}
                 </a>
             </div>
 

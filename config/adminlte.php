@@ -252,13 +252,14 @@ return [
     |
     */
 
-    'use_route_url' => false,
-    'dashboard_url' => 'dashboard',
+    'use_route_url' => true,
+    'dashboard_url' => false,
     'logout_url' => 'logout',
-    'login_url' => 'login',
-    'register_url' => 'register',
-    'password_reset_url' => 'password/reset/request',
-    'password_email_url' => 'password/email',
+    'login_url' => 'signin',
+    'register_url' => 'register.show',
+    'password_request_url' => 'password.email.request',
+    'password_reset_url' => 'password.email.reset',
+    'password_email_url' => 'password.email.send',
     'profile_url' => false,
 
     /*
