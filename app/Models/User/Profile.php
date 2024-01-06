@@ -4,6 +4,7 @@ namespace App\Models\User;
 
 use Carbon\Carbon;
 use Eloquent;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -21,6 +22,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Profile extends Model
 {
+    use HasFactory;
+
     public const GENDER_EMPTY = 0;
     public const FEMALE = 1;
     public const MALE = 2;
