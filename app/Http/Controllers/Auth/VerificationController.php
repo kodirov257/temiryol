@@ -14,7 +14,7 @@ use Illuminate\View\View;
 
 class VerificationController extends Controller
 {
-    public function verifyForm(Request $request): RedirectResponse|View
+    public function verifyEmailForm(Request $request): RedirectResponse|View
     {
         try {
             $session = Session::get('auth');

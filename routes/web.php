@@ -18,10 +18,10 @@ Route::middleware('guest')->group(function () {
     Route::get('register', 'Auth\RegistrationController@create')->name('register.show');
     Route::post('register', 'Auth\RegistrationController@register')->name('register');
 
-    Route::get('/verify', 'Auth\VerificationController@verifyForm')->name('verification.notice');
+    Route::get('/verify-email', 'Auth\VerificationController@verifyEmailForm')->name('verification.notice');
     Route::get('/verify-email/{id}/{hash}', 'Auth\VerificationController@verifyEmail')
         ->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
-    Route::post('/email/verification-notification', 'Auth\VerificationController@sendEmailVerificationNotification')
+    Route::post('/verify-email/resend', 'Auth\VerificationController@sendEmailVerificationNotification')
         ->middleware(['throttle:6,1'])->name('verification.send');
 
     Route::get('/forgot-password', 'Auth\PasswordResetController@showEmail')->name('password.email.request');
