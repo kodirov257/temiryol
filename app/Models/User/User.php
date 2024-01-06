@@ -2,7 +2,6 @@
 
 namespace App\Models\User;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Carbon\Carbon;
 use Eloquent;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -24,6 +23,8 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string $remember_token
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ *
+ * @property Profile $profile
  *
  * @mixin Eloquent
  */
@@ -48,8 +49,11 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = [
         'name',
         'email',
+        'role',
+        'status',
         'password',
         'email_verified',
+        'email_verify_token',
     ];
 
     /**
@@ -118,8 +122,13 @@ class User extends Authenticatable implements MustVerifyEmail
         ])->save();
     }
 
-    public function getEmailForVerification(): string
+
+    ########################################### Relations
+
+    public function profile(): \Illuminate\Database\Eloquent\Relations\HasOne|Profile
     {
-        return $this->email_verify_token;
+        return $this->hasOne(Profile::class, 'user_id', 'id');
     }
+
+    ###########################################
 }

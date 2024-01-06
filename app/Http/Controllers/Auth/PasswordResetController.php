@@ -41,12 +41,6 @@ class PasswordResetController extends Controller
         }
     }
 
-    public function resetPassword(Request $request): RedirectResponse
-    {
-        $route = route('password.email.reset.show', ['token' => $request->route('token')]);
-        return redirect($route . '?email=' . $request->email);
-    }
-
     public function showResetByEmail(Request $request): View
     {
         return view('auth.passwords.reset', compact('request'));

@@ -4,8 +4,13 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 use App\Models\User\User;
+use Illuminate\Auth\Notifications\ResetPassword;
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\URL;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -23,6 +28,22 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        ResetPassword::createUrlUsing(function (User $user, string $token) {
+            $route = route('password.email.reset.show', ['token' => $token]);
+            return $route . '?email=' . $user->email;
+        });
+
+        VerifyEmail::createUrlUsing(function (User $user) {
+            return URL::temporarySignedRoute(
+                'verification.verify',
+                Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
+                [
+                    'id' => $user->getKey(),
+                    'hash' => $user->email_verify_token,
+                ]
+            );
+        });
+
         $this->registerPolicies();
 
         Gate::define('admin-panel', function (User $user) {
