@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use JeroenNoten\LaravelAdminLte\Http\Controllers\DarkModeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,8 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/login', 'Auth\LoginController@loginForm');
+
 Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'namespace' => 'Admin'/*, 'middleware' => ['auth', 'can:admin-panel']*/], function () {
     Route::get('/', 'DashboardController@index')->name('home');
+
+    Route::post('/darkmode/toggle', [DarkModeController::class, 'toggle'])
+        ->name('darkmode.toggle');
 });
 
 Route::get('/', function () {
