@@ -14,9 +14,17 @@ use JeroenNoten\LaravelAdminLte\Http\Controllers\DarkModeController;
 |
 */
 
-Route::get('/login', 'Auth\LoginController@loginForm');
+Route::middleware('guest')->group(function () {
+    Route::get('/login', 'Auth\LoginController@loginForm')->name('login');
+    Route::post('/login', 'Auth\LoginController@login')->name('signin');
 
-Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'namespace' => 'Admin'/*, 'middleware' => ['auth', 'can:admin-panel']*/], function () {
+});
+
+Route::middleware('auth')->group(function () {
+    Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+});
+
+Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'namespace' => 'Admin', 'middleware' => ['auth'/*, 'can:admin-panel'*/]], function () {
     Route::get('/', 'DashboardController@index')->name('home');
 
     Route::post('/darkmode/toggle', [DarkModeController::class, 'toggle'])

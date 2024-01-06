@@ -1,0 +1,101 @@
+version: '3.8'
+services:
+
+    nginx:
+        image: nginx:1.25-alpine
+        container_name: temiryol-nginx
+        restart: unless-stopped
+        ports:
+            - 5500:80
+        volumes:
+            # Re-use local composer cache via host-volume
+            - ~/.composer-docker/cache:/root/.composer/cache:delegated
+            # Mount source-code for development
+            - ./:/var/www/html
+            # Mount config for development
+            - ./docker/nginx:/etc/nginx/conf.d:cached
+        links:
+            - php-fpm
+        depends_on:
+            - php-fpm
+            - db
+        networks:
+            - temiryol
+
+    php-fpm:
+        build: docker/php-fpm
+        restart: unless-stopped
+        container_name: temiryol-php
+        ports:
+            - 9000:9000
+        extra_hosts:
+            - host.docker.internal:host-gateway
+        volumes:
+            - ./:/var/www/html:cached
+        environment:
+            PHP_IDE_CONFIG: serverName=Docker
+            ENV_SUBSTITUTION_ENABLE: "true"
+            PHP_MEMORY_LIMIT: "512M"
+            PHP_EXPOSE_PHP: "On"
+            PHP_SESSION_GC_MAXLIFETIME: "7200"
+            PHP_FPM_ERROR_LOG: "/proc/self/fd/2"
+            PHP_FPM_LOG_LEVEL: "error"
+            PHP_FPM_LISTEN: "9000"
+            PHP_FPM_USER: "www-data"
+            PHP_FPM_GROUP: "www-data"
+            PHP_FPM_LISTEN_OWNER: "www-data"
+            PHP_FPM_LISTEN_GROUP: "www-data"
+        links:
+            - db
+            - redis
+        depends_on:
+            - db
+        networks:
+            - temiryol
+
+    db:
+        build: docker/psql
+        ports:
+            - 11:5432
+        container_name: temiryol-db
+        restart: unless-stopped
+        volumes:
+            - ./docker/psql/db-cache:/var/lib/postgresql
+        environment:
+            - POSTGRES_DB=temiryol
+            - POSTGRES_USER=dev_temiryol
+            - POSTGRES_PASSWORD=temiryol
+        networks:
+            - temiryol
+
+    redis:
+        image: redis
+        restart: unless-stopped
+        environment:
+            - ALLOW_EMPTY_PASSWORD=yes
+        ports:
+            - 6379:6379
+        container_name: temiryol-redis
+        volumes:
+            - ./:/var/www/html:cached
+        networks:
+            - temiryol
+
+
+    node:
+        image: node:20.3.0-alpine3.18
+        restart: unless-stopped
+        volumes:
+            - ./:/var/www/html/
+        tty: true
+        working_dir: /var/www/html/
+        networks:
+            - temiryol
+
+networks:
+    temiryol:
+        driver: bridge
+        ipam:
+            driver: default
+            config:
+                - subnet: 192.168.206.0/28
