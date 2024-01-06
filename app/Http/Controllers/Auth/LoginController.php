@@ -60,7 +60,7 @@ class LoginController extends Controller
 
             return redirect()->route('dashboard.home');
         } catch (\Exception $e) {
-            dd($e->getMessage());
+            return redirect()->route('login')->withErrors($e->getMessage());
         }
     }
 }

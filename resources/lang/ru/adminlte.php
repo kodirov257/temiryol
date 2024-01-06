@@ -3,6 +3,9 @@
 return [
 
     'full_name'                   => 'Полное имя',
+    'first_name'                  => 'Имя',
+    'last_name'                   => 'Фамилия',
+    'username'                    => 'Имя пользователя',
     'email'                       => 'Почта',
     'email_or_username'           => 'Почта или Имя пользователя',
     'password'                    => 'Пароль',

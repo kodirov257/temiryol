@@ -3,6 +3,9 @@
 return [
 
     'full_name'                   => 'Full name',
+    'first_name'                  => 'First name',
+    'last_name'                   => 'Last name',
+    'username'                    => 'Username',
     'email'                       => 'Email',
     'email_or_username'           => 'Email or Username',
     'password'                    => 'Password',
