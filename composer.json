@@ -66,6 +66,9 @@
             "php-http/discovery": true
         }
     },
+    "conflict": {
+        "ext-psr": "*"
+    },
     "minimum-stability": "stable",
     "prefer-stable": true
 }
