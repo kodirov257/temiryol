@@ -3,12 +3,28 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Carbon\Carbon;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+/**
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ * @property string $email_verify_token
+ * @property boolean $email_verified
+ * @property Carbon $email_verified_at
+ * @property string $password
+ * @property string $role
+ * @property int $status
+ * @property string $remember_token
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ */
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -30,6 +46,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'email_verified',
     ];
 
     /**
@@ -48,7 +65,58 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
+        'email_verified' => 'boolean',
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function isWait(): bool
+    {
+        return $this->status === self::STATUS_WAIT;
+    }
+
+    public function isActive(): bool
+    {
+        return $this->status === self::STATUS_ACTIVE;
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === self::ROLE_ADMIN;
+    }
+
+    public function isAccountant(): bool
+    {
+        return $this->role === self::ROLE_ACCOUNTANT;
+    }
+
+    public function isWorker(): bool
+    {
+        return $this->role === self::ROLE_WORKER;
+    }
+
+    public function isUser(): bool
+    {
+        return $this->role === self::ROLE_USER;
+    }
+
+    public function hasVerifiedEmail(): bool
+    {
+        return parent::hasVerifiedEmail() && $this->email_verified;
+    }
+
+    public function markEmailAsVerified(): bool
+    {
+        return $this->forceFill([
+            'status' => self::STATUS_ACTIVE,
+            'email_verify_token' => null,
+            'email_verified_at' => $this->freshTimestamp(),
+            'email_verified' => true,
+        ])->save();
+    }
+
+    public function getEmailForVerification(): string
+    {
+        return $this->email_verify_token;
+    }
 }

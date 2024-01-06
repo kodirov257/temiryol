@@ -39,7 +39,7 @@ class LoginController extends Controller
 
             $request->session()->regenerate();
 
-            return redirect()->intended(RouteServiceProvider::HOME);
+            return $request->authenticated();
         } catch (ValidationException $e) {
             return redirect()->route('login')->withInput($request->only($request->username(), 'remember'))->withErrors($e->errors());
         } catch (\Exception $e) {

@@ -19,6 +19,8 @@ return new class extends Migration
             $table->id();
             $table->string('name', 50)->unique();
             $table->string('email', 100)->unique();
+            $table->boolean('email_verified')->default(false);
+            $table->string('email_verify_token')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password', 120);
             $table->string('role');
@@ -31,6 +33,7 @@ return new class extends Migration
             'name'              => 'admin',
             'email'             => 'admin@gmail.com',
             'password'          => bcrypt('1q2w3e4r5t6y'),
+            'email_verified'    => true,
             'email_verified_at' => Carbon::now()->addSeconds(300),
             'role'              => User::ROLE_ADMIN,
             'status'            => User::STATUS_ACTIVE,
@@ -43,6 +46,7 @@ return new class extends Migration
             'name'              => 'accountant',
             'email'             => 'accountant@gmail.com',
             'password'          => bcrypt('1q2w3e4r5t6y'),
+            'email_verified'    => true,
             'email_verified_at' => Carbon::now()->addSeconds(300),
             'role'              => User::ROLE_ACCOUNTANT,
             'status'            => User::STATUS_ACTIVE,
@@ -55,6 +59,7 @@ return new class extends Migration
             'name'              => 'worker',
             'email'             => 'worker@gmail.com',
             'password'          => bcrypt('1q2w3e4r5t6y'),
+            'email_verified'    => true,
             'email_verified_at' => Carbon::now()->addSeconds(300),
             'role'              => User::ROLE_WORKER,
             'status'            => User::STATUS_ACTIVE,
@@ -67,6 +72,7 @@ return new class extends Migration
             'name'              => 'user',
             'email'             => 'user@gmail.com',
             'password'          => bcrypt('1q2w3e4r5t6y'),
+            'email_verified'    => true,
             'email_verified_at' => Carbon::now()->addSeconds(300),
             'role'              => User::ROLE_USER,
             'status'            => User::STATUS_ACTIVE,

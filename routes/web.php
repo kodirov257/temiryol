@@ -20,7 +20,12 @@ Route::middleware('guest')->group(function () {
 
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth')->group(function () {Route::get('/verify', 'Auth\VerificationController@verifyForm')->name('verification.show');
+    Route::post('/verify-email/{id}/{hash}', 'Auth\VerificationController@verifyEmail')
+        ->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
+    Route::post('/email/verification-notification', 'Auth\VerificationController@sendEmailVerificationNotification')
+        ->middleware(['signed', 'throttle:6,1'])->name('verification.send');
+
     Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 });
 
