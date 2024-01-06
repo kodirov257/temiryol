@@ -43,6 +43,9 @@ class UserFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
+            'email_verified' => false,
+            'email_verify_token' => Str::uuid() . '_' . date('Y-m-d-H:i:s'),
+            'status' => USER::STATUS_WAIT,
         ]);
     }
 }
