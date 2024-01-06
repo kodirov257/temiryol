@@ -260,6 +260,7 @@ return [
     'password_request_url' => 'password.email.request',
     'password_reset_url' => 'password.email.reset',
     'password_email_url' => 'password.email.send',
+    'register_completion_url' => 'register.complete',
     'profile_url' => false,
 
     /*

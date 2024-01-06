@@ -160,6 +160,7 @@ return [
          * Package Service Providers...
          */
         App\Providers\AdminLteServiceProvider::class,
+        PragmaRX\Google2FALaravel\ServiceProvider::class,
 
         /*
          * Application Service Providers...

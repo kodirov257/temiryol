@@ -32,7 +32,7 @@ class AuthenticationService
     /**
      * @throws \Throwable
      */
-    public function register(string $name, string $email, string $password, ?string $firstName = null, ?string $lastName = null): User
+    public function register(string $name, string $email, string $password, string $google2faSecret, ?string $firstName = null, ?string $lastName = null): User
     {
         DB::beginTransaction();
         try {
@@ -43,6 +43,7 @@ class AuthenticationService
                 'status' => User::STATUS_WAIT,
                 'password' => Hash::make($password),
                 'email_verify_token' => Str::uuid() . '_' . date('Y-m-d-H:i:s'),
+                'google2fa_secret' => $google2faSecret,
             ]);
 
             $user->profile()->create([

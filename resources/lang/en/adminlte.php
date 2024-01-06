@@ -13,6 +13,7 @@ return [
     'remember_me'                 => 'Remember Me',
     'register'                    => 'Register',
     'register_a_new_membership'   => 'Register a new membership',
+    'register_complete'           => 'Complete Registration',
     'i_forgot_my_password'        => 'I forgot my password',
     'i_already_have_a_membership' => 'I already have a membership',
     'sign_in'                     => 'Sign In',
@@ -30,4 +31,13 @@ return [
     'verify_request_another'      => 'click here to request another',
     'confirm_password_message'    => 'Please, confirm your password to continue.',
     'remember_me_hint'            => 'Keep me authenticated indefinitely or until I manually logout',
+    'google2fa_title'             => 'Set up Two Factor Authentication',
+    'setup_google2fa'             => 'Set up Google Authenticator',
+    'google2fa_message1'          => 'Set up your two factor authentication by scanning the barcode below. Alternatively, you can use the code',
+    'google2fa_message2'          => 'You must set up your Google Authenticator app before continuing. You will be unable to login otherwise',
+    'setup'                       => 'Setup',
+    'setup_complete'              => 'Complete setup',
+
+    'male' => 'Male',
+    'female' => 'Female',
 ];

@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('password', 120);
             $table->string('role');
             $table->integer('status');
+            $table->text('google2fa_secret')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

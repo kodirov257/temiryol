@@ -2,11 +2,7 @@
 
 namespace Tests\Feature\Auth;
 
-use App\Models\User\Profile;
-use App\Models\User\User;
-use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class RegistrationTest extends TestCase

@@ -5,6 +5,7 @@ namespace App\Models\User;
 use Carbon\Carbon;
 use Eloquent;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -20,6 +21,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string $password
  * @property string $role
  * @property int $status
+ * @property string $google2fa_secret
  * @property string $remember_token
  * @property Carbon $created_at
  * @property Carbon $updated_at
@@ -54,6 +56,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'email_verified',
         'email_verify_token',
+        'google2fa_secret',
     ];
 
     /**
@@ -64,6 +67,8 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password',
         'remember_token',
+        'email_verify_token',
+        'google2fa_secret',
     ];
 
     /**
@@ -120,6 +125,14 @@ class User extends Authenticatable implements MustVerifyEmail
             'email_verified_at' => $this->freshTimestamp(),
             'email_verified' => true,
         ])->save();
+    }
+
+    public function google2faSecret(): Attribute
+    {
+        return new Attribute(
+            get: fn ($value) => decrypt($value),
+            set: fn ($value) => encrypt($value),
+        );
     }
 
 

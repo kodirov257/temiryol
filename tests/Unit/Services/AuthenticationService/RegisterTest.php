@@ -15,10 +15,14 @@ class RegisterTest extends TestCase
     {
         $service = $this->app->make(AuthenticationService::class);
 
+        $google2fa = app('pragmarx.google2fa');
+        $google2faSecret = $google2fa->generateSecretKey();
+
         $user = $service->register(
             name: $username = 'TestUser',
             email: $email = 'test@example.com',
             password: $password = 'password',
+            google2faSecret: $google2faSecret,
             firstName: $firstName = 'Test',
             lastName: $lastName = 'User'
         );

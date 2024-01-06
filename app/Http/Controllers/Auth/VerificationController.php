@@ -34,7 +34,7 @@ class VerificationController extends Controller
         }
     }
 
-    public function verifyEmail(EmailVerificationRequest $request): RedirectResponse
+    public function verifyEmail(EmailVerificationRequest $request): RedirectResponse|View
     {
         if ($request->user->hasVerifiedEmail()) {
             return redirect()->route('login')->with('success', trans('auth.email_verified_login'));
@@ -44,7 +44,15 @@ class VerificationController extends Controller
             event(new Verified($request->user));
         }
 
-        return redirect()->route('login')->with('success', trans('auth.email_verified_login'));
+        $google2fa = app('pragmarx.google2fa');
+        $secret = $request->user->google2fa_secret;
+        $QR_Image = $google2fa->getQRCodeInline(
+            config('app.name'),
+            $request->user->email,
+            $secret
+        );
+
+        return view('auth.google2fa.register', ['QR_Image' => $QR_Image, 'secret' => $secret, 'email' => $request->user->email]);
     }
 
     public function sendEmailVerificationNotification(Request $request): RedirectResponse

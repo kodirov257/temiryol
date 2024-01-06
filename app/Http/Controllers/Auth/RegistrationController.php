@@ -38,8 +38,11 @@ class RegistrationController extends Controller
                 'last_name' => 'nullable|string|max:50',
             ]);
 
+            $google2fa = app('pragmarx.google2fa');
+            $google2faSecret = $google2fa->generateSecretKey();
+
             event(new Registered($user = $this->authService->register(
-                $request->name, $request->email, $request->password, $request->first_name, $request->last_name
+                $request->name, $request->email, $request->password, $google2faSecret, $request->first_name, $request->last_name
             )));
 
             Session::put('auth', ['email' => $user->email]);
@@ -51,6 +54,19 @@ class RegistrationController extends Controller
         } catch (\DomainException|\Exception|\Throwable $e) {
             return redirect('register')->with('error', $e->getMessage());
         }
+    }
+
+    public function completeRegistration(Request $request): RedirectResponse
+    {
+        if (!$request->email || $user = User::where('email', $request->email)) {
+            return back()->with('error', trans('auth.email_not_identified'));
+        }
+
+        if (!$user->hasVerifiedEmail() || !$user->google2fa_secret) {
+            return back()->with('error', trans('auth.email_not_verified'));
+        }
+
+        return redirect()->route('login')->with('success', trans('auth.email_verified_login'));
     }
 
     protected function registered(Request $request, User $user): RedirectResponse
