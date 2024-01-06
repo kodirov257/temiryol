@@ -8,6 +8,7 @@ use App\Services\Auth\AuthenticationService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
@@ -38,6 +39,8 @@ class RegistrationController extends Controller
             ]);
 
             event(new Registered($user = $this->authService->register($request)));
+
+            Session::put('auth', ['email' => $user->email]);
 
             return $this->registered($request, $user);
         } catch (ValidationException $e) {

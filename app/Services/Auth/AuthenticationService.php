@@ -3,12 +3,10 @@
 namespace App\Services\Auth;
 
 use App\Models\User\User;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
 class AuthenticationService
@@ -51,8 +49,6 @@ class AuthenticationService
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
             ]);
-
-            Session::put('auth', ['email' => $user->email]);
 
             DB::commit();
 
