@@ -22,7 +22,7 @@ class AuthenticationService
 
     public static function getHomeRouteName(?User $user = null): string
     {
-        if (!$user ? Auth::user()->isAdmin() : $user->isAdmin()) {
+        if (!$user ? Auth::user() && Auth::user()->isAdmin() : $user->isAdmin()) {
             return 'dashboard.home';
         }
 

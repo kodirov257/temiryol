@@ -22,6 +22,8 @@
     @include('layouts.admin.error-summary')
     <div class="content">
         <div class="{{ config('adminlte.classes_content') ?: $def_container_class }}">
+            @section('breadcrumbs', Breadcrumbs::render())
+            @yield('breadcrumbs')
             @yield('content')
         </div>
     </div>

@@ -53,6 +53,9 @@ Route::middleware('auth')->group(function () {
 Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'namespace' => 'Admin', 'middleware' => ['auth', 'can:admin-panel', '2fa']], function () {
     Route::get('/', 'DashboardController@index')->name('home');
 
+    Route::resource('users', 'UserController');
+    Route::post('users/{user}/remove-photo', 'UserController@removeAvatar')->name('remove-photo');
+
     Route::post('/darkmode/toggle', [DarkModeController::class, 'toggle'])
         ->name('darkmode.toggle');
 });

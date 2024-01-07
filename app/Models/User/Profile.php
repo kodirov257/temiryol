@@ -2,13 +2,14 @@
 
 namespace App\Models\User;
 
+use App\Helpers\ImageHelper;
 use Carbon\Carbon;
 use Eloquent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @package int $user_id
+ * @property int $user_id
  * @property string $first_name
  * @property string $last_name
  * @property Carbon $birth_date
@@ -16,6 +17,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $address
  * @property string $fullName
  * @property string $avatar
+ *
+ * @property string $avatarThumbnail
+ * @property string $avatarOriginal
  *
  * @property User $user
  * @mixin Eloquent
@@ -52,6 +56,16 @@ class Profile extends Model
     public function getFullNameAttribute(): string
     {
         return "$this->last_name $this->first_name";
+    }
+
+    public function getAvatarThumbnailAttribute(): string
+    {
+        return '/storage/files/' . ImageHelper::FOLDER_PROFILES . '/' . $this->user_id . '/' . ImageHelper::TYPE_THUMBNAIL . '/' . $this->avatar;
+    }
+
+    public function getAvatarOriginalAttribute(): string
+    {
+        return '/storage/files/' . ImageHelper::FOLDER_PROFILES . '/' . $this->user_id . '/' . ImageHelper::TYPE_ORIGINAL . '/' . $this->avatar;
     }
 
 

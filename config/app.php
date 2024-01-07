@@ -161,6 +161,7 @@ return [
          */
         App\Providers\AdminLteServiceProvider::class,
         PragmaRX\Google2FALaravel\ServiceProvider::class,
+        Spatie\Html\HtmlServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -185,6 +186,9 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
+        'Google2FA' => PragmaRX\Google2FALaravel\Facade::class,
+        'Html' => Spatie\Html\Facades\Html::class,
+        'Form' => \Spatie\Html\Elements\Form::class,
     ])->toArray(),
 
 ];
