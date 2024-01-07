@@ -35,7 +35,7 @@ class AuthServiceProvider extends ServiceProvider
 
         VerifyEmail::createUrlUsing(function (User $user) {
             return URL::temporarySignedRoute(
-                'verification.verify',
+                'verification.email.verify',
                 Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
                 [
                     'id' => $user->getKey(),

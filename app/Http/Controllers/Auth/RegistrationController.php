@@ -71,6 +71,6 @@ class RegistrationController extends Controller
 
     protected function registered(Request $request, User $user): RedirectResponse
     {
-        return redirect()->route('verification.notice');
+        return redirect()->route('verification.email.notice');
     }
 }

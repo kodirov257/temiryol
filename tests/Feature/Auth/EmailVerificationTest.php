@@ -36,7 +36,7 @@ class EmailVerificationTest extends TestCase
         Event::fake();
 
         $verificationUrl = URL::temporarySignedRoute(
-            'verification.verify',
+            'verification.email.verify',
             now()->addMinutes(60),
             ['id' => $user->id, 'hash' => $user->email_verify_token]
         );
@@ -55,7 +55,7 @@ class EmailVerificationTest extends TestCase
         Event::fake();
 
         $verificationUrl = URL::temporarySignedRoute(
-            'verification.verify',
+            'verification.email.verify',
             now()->addMinutes(60),
             ['id' => $user->id, 'hash' => Str::uuid() . '_' . date('Y-m-d-H:i:s')]
         );

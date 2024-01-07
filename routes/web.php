@@ -19,11 +19,11 @@ Route::middleware('guest')->group(function () {
     Route::post('register', 'Auth\RegistrationController@register')->name('register');
     Route::post('register/complete', 'Auth\RegistrationController@completeRegistration')->name('register.complete');
 
-    Route::get('/verify-email', 'Auth\VerificationController@verifyEmailForm')->name('verification.notice');
+    Route::get('/verify-email', 'Auth\VerificationController@verifyEmailForm')->name('verification.email.notice');
     Route::get('/verify-email/{id}/{hash}', 'Auth\VerificationController@verifyEmail')
-        ->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
+        ->middleware(['signed', 'throttle:6,1'])->name('verification.email.verify');
     Route::post('/verify-email/resend', 'Auth\VerificationController@sendEmailVerificationNotification')
-        ->middleware(['throttle:6,1'])->name('verification.send');
+        ->middleware(['throttle:6,1'])->name('verification.email.send');
 
     Route::get('/forgot-password', 'Auth\PasswordResetController@showEmail')->name('password.email.request');
     Route::post('/forgot-password-email', 'Auth\PasswordResetController@sendResetByEmail')->name('password.email.send');
