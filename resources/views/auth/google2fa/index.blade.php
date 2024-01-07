@@ -11,7 +11,7 @@
 
     @section('auth_body')
         <div class="row justify-content-center align-items-center " style="height: 70vh;">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-12 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-heading font-weight-bold">Register</div>
                     <hr>
@@ -29,16 +29,16 @@
 
                             <div class="form-group">
                                 <p>Please enter the  <strong>OTP</strong> generated on your Authenticator App. <br> Ensure you submit the current one because it refreshes every 30 seconds.</p>
-                                <label for="one_time_password" class="col-md-4 control-label">One Time Password</label>
+                                <label for="one_time_password" class="col-md-12 control-label">One Time Password</label>
 
 
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <input id="one_time_password" type="number" class="form-control" name="one_time_password" required autofocus>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <div class="col-md-6 col-md-offset-4 mt-3">
+                                <div class="col-md-12 col-md-offset-4 mt-3">
                                     <button type="submit" class="btn btn-primary">
                                         {{ __('adminlte.sign_in') }}
                                     </button>
