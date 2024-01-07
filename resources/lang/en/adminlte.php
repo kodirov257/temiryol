@@ -62,6 +62,7 @@ return [
     'address' => 'Address',
     'male' => 'Male',
     'female' => 'Female',
+    'type' => 'Type',
     'created_by' => 'Created by',
     'updated_by' => 'Updated by',
     'created_at' => 'Created at',
@@ -82,5 +83,20 @@ return [
         'role_worker' => 'Worker',
         'role_manager' => 'Manager',
         'requests' => 'Manager role requests',
+    ],
+
+    'region' => [
+        'add' => 'Add Region',
+        'add_region' => 'Add Region',
+        'add_district' => 'Add District',
+        'add_center' => 'Add Administrative Center',
+        'add_town' => 'Add Town',
+        'name' => 'Region',
+        'region' => 'Region',
+        'city' => 'City',
+        'district' => 'District',
+        'center' => 'Administrative Center',
+        'town' => 'Town',
+        'parent' => 'Parent Region',
     ],
 ];

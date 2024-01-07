@@ -16,6 +16,8 @@ return [
     'important'                     => 'Muhim',
     'warning'                       => 'Ogohlantirish',
     'information'                   => 'ma`lumot',
+    'regions_settings'              => 'HUDUDLAR SOZLAMALARI',
 
     'users'                         => 'Foydalanuvchilar',
+    'regions'                       => 'Hududlar',
 ];

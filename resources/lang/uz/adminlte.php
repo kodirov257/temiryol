@@ -62,6 +62,7 @@ return [
     'address' => 'Manzili',
     'male' => 'Erkak',
     'female' => 'Ayol',
+    'type' => 'Turi',
     'created_by' => 'tomonidan yaratilgan',
     'updated_by' => 'tomonidan yangilangan',
     'created_at' => 'Yaratilgan vaqt',
@@ -81,5 +82,20 @@ return [
         'role_administrator' => 'Administrator',
         'role_worker' => 'Ishchi',
         'role_manager' => 'Boshqaruvchi',
+    ],
+
+    'region' => [
+        'add' => 'Hudud qo`shmoq',
+        'add_region' => 'Viloyat qo`shmoq',
+        'add_district' => 'Tuman qo`shmoq',
+        'add_center' => 'Tuman Markazi qo`shmoq',
+        'add_town' => 'Shaharcha qo`shmoq',
+        'name' => 'Region',
+        'region' => 'Viloyat',
+        'city' => 'Shahar',
+        'district' => 'Tuman',
+        'center' => 'Tuman Markazi',
+        'town' => 'Shaharcha',
+        'parent' => 'Kattaroq hududi',
     ],
 ];

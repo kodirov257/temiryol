@@ -16,6 +16,8 @@ return [
     'important'                     => 'Важно',
     'warning'                       => 'Внимание',
     'information'                   => 'Информация',
+    'regions_settings'              => 'НАСТРОЙКИ РЕГИОНОВ',
 
     'users'                         => 'Пользователи',
+    'regions'                       => 'Регионы',
 ];

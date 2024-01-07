@@ -16,6 +16,8 @@ return [
     'important'                     => 'Important',
     'warning'                       => 'Warning',
     'information'                   => 'Information',
+    'regions_settings'              => 'REGIONS SETTINGS',
 
     'users'                         => 'Users',
+    'regions'                       => 'Regions',
 ];
