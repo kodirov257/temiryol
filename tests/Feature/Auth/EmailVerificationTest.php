@@ -27,7 +27,29 @@ class EmailVerificationTest extends TestCase
         $response->assertViewIs('auth.verify');
     }
 
-    public function test_email_can_be_verified(): void
+    public function test_email_can_be_verified_when_admin(): void
+    {
+        $user = User::factory()->unverified()->create([
+            'role' => User::ROLE_ADMIN,
+            'google2fa_secret' => Google2FA::generateSecretKey(),
+        ]);
+
+        Event::fake();
+
+        $verificationUrl = URL::temporarySignedRoute(
+            'verification.email.verify',
+            now()->addMinutes(60),
+            ['id' => $user->id, 'hash' => $user->email_verify_token]
+        );
+
+        $response = $this->get($verificationUrl);
+
+        Event::assertDispatched(Verified::class);
+        self::assertTrue($user->fresh()->hasVerifiedEmail());
+        $response->assertViewIs('auth.google2fa.register');
+    }
+
+    public function test_email_can_be_verified_when_user(): void
     {
         $user = User::factory()->unverified()->create([
             'google2fa_secret' => Google2FA::generateSecretKey(),
@@ -45,7 +67,7 @@ class EmailVerificationTest extends TestCase
 
         Event::assertDispatched(Verified::class);
         self::assertTrue($user->fresh()->hasVerifiedEmail());
-        $response->assertViewIs('auth.google2fa.register');
+        $response->assertRedirect('/login');
     }
 
     public function test_email_is_already_verified(): void

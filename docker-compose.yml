@@ -68,6 +68,21 @@ services:
         networks:
             - temiryol
 
+    db-test:
+        build: docker/psql
+        ports:
+            - 12:5432
+        container_name: temiryol-db-test
+        restart: unless-stopped
+        volumes:
+            - ./docker/psql/db-cache:/var/lib/postgresql
+        environment:
+            - POSTGRES_DB=temiryol
+            - POSTGRES_USER=test_temiryol
+            - POSTGRES_PASSWORD=temiryol
+        networks:
+            - temiryol
+
     redis:
         image: redis
         restart: unless-stopped
