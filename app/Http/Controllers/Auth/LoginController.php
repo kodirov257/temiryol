@@ -14,10 +14,13 @@ use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
-    public function __construct()
+    private AuthenticationService $service;
+
+    public function __construct(AuthenticationService $service)
     {
         session(['url.intended' => url()->previous()]);
         $this->middleware('guest')->except('logout');
+        $this->service = $service;
     }
 
     public function loginForm(): View
@@ -36,11 +39,11 @@ class LoginController extends Controller
     public function login(LoginRequest $request): RedirectResponse
     {
         try {
-            $request->authenticate();
+            $this->service->authenticate($request);
 
             $request->session()->regenerate();
 
-            return $request->authenticated();
+            return $this->service->authenticated();
         } catch (ValidationException $e) {
             return redirect()->route('login')->withInput($request->only($request->username(), 'remember'))->withErrors($e->errors());
         } catch (\Exception $e) {
