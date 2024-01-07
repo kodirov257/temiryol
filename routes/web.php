@@ -62,4 +62,4 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'namespace' => 'Adm
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
