@@ -37,6 +37,9 @@
             {{-- Configured right links --}}
             @each('partials.admin.navbar.menu-item', $adminlte->menu('navbar-right'), 'item')
 
+            {{-- Localization --}}
+            @include('partials.admin.navbar.menu-item-localization')
+
             {{-- User menu link --}}
             @if(Auth::user())
                 @if(config('adminlte.usermenu_enabled'))
