@@ -67,5 +67,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('manage-regions', function (User $user) {
             return $user->isAdmin();
         });
+
+        Gate::define('manage-organizations', function (User $user) {
+            return $user->isAdmin();
+        });
     }
 }

@@ -14,12 +14,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('regions', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->string('name_uz');
-            $table->string('name_uz_cy')->nullable();
+            $table->string('name_uz_cy');
             $table->string('name_ru');
             $table->string('name_en');
-            $table->unsignedBigInteger('parent_id')->nullable();
+            $table->unsignedInteger('parent_id')->nullable();
             $table->string('type');
             $table->string('slug');
             $table->unsignedBigInteger('created_by');
@@ -33,6 +33,20 @@ return new class extends Migration
             $table->foreign('created_by')->references('id')->on('users')->onDelete('restrict');
             $table->foreign('updated_by')->references('id')->on('users')->onDelete('restrict');
         });
+
+        DB::table('regions')->insert([
+            'name_uz'           => 'Toshkent',
+            'name_uz_cy'        => 'Тошкент',
+            'name_ru'           => 'Ташкент',
+            'name_en'           => 'Tashkent',
+            'parent_id'         => null,
+            'type'              => Region::CAPITAL,
+            'slug'              => 'tashkent',
+            'created_by'        => 1,
+            'updated_by'        => 1,
+            'created_at'        => Carbon::now(),
+            'updated_at'        => Carbon::now(),
+        ]);
 
         DB::table('regions')->insert([
             'name_uz'           => 'Andijon',

@@ -58,6 +58,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::post('users/{user}/remove-photo', 'UserController@removeAvatar')->name('remove-photo');
 
         Route::resource('regions', 'RegionController');
+        Route::resource('organizations', 'OrganizationController');
 
         Route::post('/darkmode/toggle', [DarkModeController::class, 'toggle'])
             ->name('darkmode.toggle');

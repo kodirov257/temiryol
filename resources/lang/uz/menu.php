@@ -20,4 +20,5 @@ return [
 
     'users'                         => 'Foydalanuvchilar',
     'regions'                       => 'Hududlar',
+    'organizations'                 => 'Tashkilotlar',
 ];

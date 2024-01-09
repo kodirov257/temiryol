@@ -92,11 +92,22 @@ return [
         'add_center' => 'Add Administrative Center',
         'add_town' => 'Add Town',
         'name' => 'Region',
+        'capital' => 'Capital',
         'region' => 'Region',
         'city' => 'City',
         'district' => 'District',
         'center' => 'Administrative Center',
         'town' => 'Town',
         'parent' => 'Parent Region',
+    ],
+
+    'organization' => [
+        'add' => 'Add Organization',
+        'name' => 'Organization',
+        'public_company' => 'Public Company',
+        'subsidiary' => 'Subsidiary',
+        'branch' => 'Branch',
+        'branches' => 'Branches',
+        'parent' => 'Parent Factory',
     ],
 ];

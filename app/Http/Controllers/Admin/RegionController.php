@@ -24,8 +24,9 @@ class RegionController extends Controller
 
     public function index(Request $request): View
     {
-        $query = Region::with('parent')->orderByDesc('updated_at')
-            ->regions('type', Region::REGION);
+        $query = Region::orderByDesc('updated_at')
+//            ->whereIn('type', [Region::REGION, Region::CAPITAL])
+            ->regions();
 
         if (!empty($value = $request->get('name'))) {
             $query->where(function (Builder $query) use ($value) {

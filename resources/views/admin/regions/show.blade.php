@@ -61,7 +61,7 @@
         </div>
 
         <div class="card" id="states">
-            <div class="card-header card-gray with-border">{{ __('menu.regions') }}</div>
+            <div class="card-header card-green with-border">{{ __('menu.regions') }}</div>
             <div class="card-body">
                 <p><a href="{{ route('dashboard.regions.create', ['parent' => $region->id]) }}" class="btn btn-success">{{ __('adminlte.region.add') }}</a></p>
 
@@ -77,13 +77,13 @@
                     </thead>
                     <tbody>
 
-                    @foreach ($region->children as $region)
+                    @foreach ($region->children as $child)
                         <tr>
-                            <td><a href="{{ route('dashboard.regions.show', $region) }}">{{ $region->name_uz }}</a></td>
-                            <td><a href="{{ route('dashboard.regions.show', $region) }}">{{ $region->name_ru }}</a></td>
-                            <td><a href="{{ route('dashboard.regions.show', $region) }}">{{ $region->name_en }}</a></td>
-                            <td>{{ $region->typeName() }}</td>
-                            <td>{{ $region->slug }}</td>
+                            <td><a href="{{ route('dashboard.regions.show', $child) }}">{{ $child->name_uz }}</a></td>
+                            <td><a href="{{ route('dashboard.regions.show', $child) }}">{{ $child->name_ru }}</a></td>
+                            <td><a href="{{ route('dashboard.regions.show', $child) }}">{{ $child->name_en }}</a></td>
+                            <td>{{ $child->typeName() }}</td>
+                            <td>{{ $child->slug }}</td>
                         </tr>
                     @endforeach
 

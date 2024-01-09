@@ -36,6 +36,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property User $updatedBy
  *
  * @property string $name
+ * @property string $place
  *
  * @method Builder|self regions()
  *
@@ -45,6 +46,7 @@ class Region extends BaseModel
 {
     use Sluggable;
 
+    public const CAPITAL = 'capital';
     public const REGION = 'region';
     public const CITY = 'city';
     public const DISTRICT = 'district';
@@ -67,6 +69,7 @@ class Region extends BaseModel
     public static function typeList(): array
     {
         return [
+            self::CAPITAL => trans('adminlte.region.capital'),
             self::REGION => trans('adminlte.region.region'),
             self::CITY => trans('adminlte.region.city'),
             self::DISTRICT => trans('adminlte.region.district'),
@@ -123,10 +126,7 @@ class Region extends BaseModel
 
     ########################################### Relations
 
-    /**
-     * @return BelongsTo|self[]
-     */
-    public function parent(): BelongsTo|array
+    public function parent(): BelongsTo|Region
     {
         return $this->belongsTo(self::class, 'parent_id', 'id');
     }

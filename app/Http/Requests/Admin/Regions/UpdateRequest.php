@@ -26,7 +26,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             'name_uz' => 'required|string|max:255|unique:regions,name_uz,' . $this->region->id . ',id,parent_id,' . ($this->region->parent_id ?: 'NULL'),
-            'name_uz_cy' => 'nullable|string|max:255|unique:regions,name_uz_cy,' . $this->region->id . ',id,parent_id,' . ($this->region->parent_id ?: 'NULL'),
+            'name_uz_cy' => 'required|string|max:255|unique:regions,name_uz_cy,' . $this->region->id . ',id,parent_id,' . ($this->region->parent_id ?: 'NULL'),
             'name_ru' => 'required|string|max:255|unique:regions,name_ru,' . $this->region->id . ',id,parent_id,' . ($this->region->parent_id ?: 'NULL'),
             'name_en' => 'required|string|max:255|unique:regions,name_en,' . $this->region->id . ',id,parent_id,' . ($this->region->parent_id ?: 'NULL'),
 //            'slug' => ['nullable', 'string', 'max:255', Rule::unique('regions')->ignore($this->region->id)],

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Organization;
 use App\Models\Region;
 use App\Models\User\User;
 use Diglactic\Breadcrumbs\Generator as Crumbs;
@@ -65,4 +66,31 @@ Breadcrumbs::for('dashboard.regions.show', function (Crumbs $crumbs, Region $reg
 Breadcrumbs::for('dashboard.regions.edit', function (Crumbs $crumbs, Region $region) {
     $crumbs->parent('dashboard.regions.show', $region);
     $crumbs->push(trans('adminlte.edit'), route('dashboard.regions.edit', $region));
+});
+
+
+// Organizations
+
+Breadcrumbs::for('dashboard.organizations.index', function (Crumbs $crumbs) {
+    $crumbs->parent('dashboard.home');
+    $crumbs->push(trans('menu.organizations'), route('dashboard.organizations.index'));
+});
+
+Breadcrumbs::for('dashboard.organizations.create', function (Crumbs $crumbs) {
+    $crumbs->parent('dashboard.organizations.index');
+    $crumbs->push(trans('adminlte.create'), route('dashboard.organizations.create'));
+});
+
+Breadcrumbs::for('dashboard.organizations.show', function (Crumbs $crumbs, Organization $organization) {
+    if ($parent = $organization->parent) {
+        $crumbs->parent('dashboard.organizations.show', $parent);
+    } else {
+        $crumbs->parent('dashboard.organizations.index');
+    }
+    $crumbs->push($organization->name, route('dashboard.organizations.show', $organization));
+});
+
+Breadcrumbs::for('dashboard.organizations.edit', function (Crumbs $crumbs, Organization $organization) {
+    $crumbs->parent('dashboard.organizations.show', $organization);
+    $crumbs->push(trans('adminlte.edit'), route('dashboard.organizations.edit', $organization));
 });
