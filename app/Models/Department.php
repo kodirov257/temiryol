@@ -18,18 +18,17 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $name_uz_cy
  * @property string $name_ru
  * @property string $name_en
- * @property int $region_id
+ * @property int $organization_id
  * @property int $parent_id
- * @property string $type
  * @property string $slug
  * @property int $created_by
  * @property int $updated_by
  * @property Carbon $created_at
  * @property Carbon $updated_at
  *
- * @property Region $region
- * @property Organization $parent
- * @property Organization[] $children
+ * @property Organization $organization
+ * @property Department $parent
+ * @property Department[] $children
  * @property User $createdBy
  * @property User $updatedBy
  *
@@ -37,20 +36,16 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  *
  * @mixin Eloquent
  */
-class Organization extends Model
+class Department extends Model
 {
     use /*HasFactory, */Sluggable;
 
-    public const PUBLIC_COMPANY = 'public_company';
-    public const SUBSIDIARY = 'subsidiary';
-    public const BRANCH = 'branch';
-
-    protected $table = 'organizations';
+    protected $table = 'departments';
 
     public int $depth;
 
     protected $fillable = [
-        'name_uz', 'name_uz_cy', 'name_ru', 'name_en', 'region_id', 'parent_id', 'type', 'slug',
+        'name_uz', 'name_uz_cy', 'name_ru', 'name_en', 'organization_id', 'parent_id', 'slug',
     ];
 
     public function sluggable(): array
@@ -60,20 +55,6 @@ class Organization extends Model
                 'source' => 'name_en',
             ],
         ];
-    }
-
-    public static function typeList(): array
-    {
-        return [
-            self::PUBLIC_COMPANY => trans('adminlte.organization.public_company'),
-            self::SUBSIDIARY => trans('adminlte.organization.subsidiary'),
-            self::BRANCH => trans('adminlte.organization.branch'),
-        ];
-    }
-
-    public function typeName(): string
-    {
-        return self::typeList()[$this->type];
     }
 
 
@@ -89,7 +70,12 @@ class Organization extends Model
 
     ########################################### Relations
 
-    public function parent(): BelongsTo|Organization
+    public function organization(): BelongsTo|Region
+    {
+        return $this->belongsTo(Organization::class, 'organization_id', 'id');
+    }
+
+    public function parent(): BelongsTo|self
     {
         return $this->belongsTo(self::class, 'parent_id', 'id');
     }
@@ -100,11 +86,6 @@ class Organization extends Model
     public function children(): HasMany|array
     {
         return $this->hasMany(self::class, 'parent_id', 'id');
-    }
-
-    public function region(): BelongsTo|Region
-    {
-        return $this->belongsTo(Region::class, 'region_id', 'id');
     }
 
     public function createdBy(): BelongsTo|User

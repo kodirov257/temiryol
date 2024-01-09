@@ -21,4 +21,5 @@ return [
     'users'                         => 'Users',
     'regions'                       => 'Regions',
     'organizations'                 => 'Organizations',
+    'departments'                   => 'Departments',
 ];

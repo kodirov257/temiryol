@@ -110,4 +110,11 @@ return [
         'branches' => 'Branches',
         'parent' => 'Parent Factory',
     ],
+
+    'department' => [
+        'add' => 'Add Department',
+        'name' => 'Department',
+        'parent' => 'Parent Department',
+        'sub' => 'Sub Departments',
+    ],
 ];

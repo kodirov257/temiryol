@@ -69,8 +69,8 @@
                     <thead>
                     <tr>
                         <th>Nomi</th>
+                        <td>Номи</td>
                         <th>Название</th>
-                        <th>Name</th>
                         <th>{{ __('adminlte.type') }}</th>
                         <th>Slug</th>
                     </tr>
@@ -80,8 +80,8 @@
                     @foreach ($region->children as $child)
                         <tr>
                             <td><a href="{{ route('dashboard.regions.show', $child) }}">{{ $child->name_uz }}</a></td>
+                            <td><a href="{{ route('dashboard.regions.show', $child) }}">{{ $child->name_uz_cy }}</a></td>
                             <td><a href="{{ route('dashboard.regions.show', $child) }}">{{ $child->name_ru }}</a></td>
-                            <td><a href="{{ route('dashboard.regions.show', $child) }}">{{ $child->name_en }}</a></td>
                             <td>{{ $child->typeName() }}</td>
                             <td>{{ $child->slug }}</td>
                         </tr>

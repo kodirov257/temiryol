@@ -51,7 +51,7 @@ class OrganizationService
     /**
      * @return Organization[]
      */
-    public function getOrganizationsWithBranches(Organization $organization = null, bool $includeItself = true): array
+    public static function getOrganizationsWithBranches(Organization $organization = null, bool $includeItself = true): array
     {
         if ($organization) {
             $companies = [$organization];
@@ -65,7 +65,7 @@ class OrganizationService
                 $company->depth = 0;
                 $organizations[] = $company;
             }
-            $this->getDescendants($organizations, $company, $includeItself ? 1 : 0);
+            self::getDescendants($organizations, $company, $includeItself ? 1 : 0);
         }
 
         return $organizations;
@@ -74,13 +74,25 @@ class OrganizationService
     /**
      * @return Organization[]
      */
-    public function getDescendants(array &$organizations, Organization $organization, int $depth): array
+    public static function getDescendants(array &$organizations, Organization $organization, int $depth): array
     {
         foreach ($organization->children as $child) {
             $child->depth = $depth;
             $organizations[] = $child;
-            $this->getDescendants($organizations, $child, $depth + 1);
+            self::getDescendants($organizations, $child, $depth + 1);
         }
         return $organizations;
+    }
+
+    public static function getOrganizationList(): array
+    {
+        /* @var $organization Organization */
+        $organizations = self::getOrganizationsWithBranches();
+        $organizationIds = [];
+        foreach ($organizations as $organization) {
+            $name = str_repeat('— ', $organization->depth);
+            $organizationIds[$organization->id] = $name . $organization->name;
+        }
+        return $organizationIds;
     }
 }

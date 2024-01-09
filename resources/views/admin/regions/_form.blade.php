@@ -33,17 +33,15 @@
                         <span class="invalid-feedback"><strong>{{ $errors->first('name_en') }}</strong></span>
                     @endif
                 </div>
-                @if(!$region && request()->get('parent'))
-                    <div class="form-group">
-                        {!! Html::label(trans('adminlte.type'), 'type')->class('col-form-label') !!}
-                        {!! Html::select('type', \App\Models\Region::typeList(), old('type', $region->type ?? null))
-                                ->class('form-control' . ($errors->has('type') ? ' is-invalid' : ''))
-                                ->required() !!}
-                        @if($errors->has('type'))
-                            <span class="invalid-feedback"><strong>{{ $errors->first('type') }}</strong></span>
-                        @endif
-                    </div>
-                @endif
+                <div class="form-group">
+                    {!! Html::label(trans('adminlte.type'), 'type')->class('col-form-label') !!}
+                    {!! Html::select('type', \App\Models\Region::typeList(), old('type', $region->type ?? null))
+                            ->class('form-control' . ($errors->has('type') ? ' is-invalid' : ''))
+                            ->required() !!}
+                    @if($errors->has('type'))
+                        <span class="invalid-feedback"><strong>{{ $errors->first('type') }}</strong></span>
+                    @endif
+                </div>
                 <div class="form-group">
                     {!! Html::label('Slug', 'slug')->class('col-form-label') !!}
                     {!! Html::text('slug', old('slug', $region->slug ?? null))->class('form-control' . ($errors->has('slug') ? ' is-invalid' : '')) !!}

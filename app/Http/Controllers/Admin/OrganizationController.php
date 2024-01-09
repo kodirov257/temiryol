@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Organizations\CreateRequest;
 use App\Http\Requests\Admin\Organizations\UpdateRequest;
 use App\Models\Organization;
+use App\Services\Manage\DepartmentService;
 use App\Services\Manage\OrganizationService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ class OrganizationController extends Controller
 
     public function index(Request $request): View
     {
-        $organizations = $this->service->getOrganizationsWithBranches();
+        $organizations = OrganizationService::getOrganizationsWithBranches();
 
         return view('admin.organizations.index', compact('organizations'));
     }
@@ -48,8 +49,10 @@ class OrganizationController extends Controller
 
     public function show(Organization $organization): View
     {
-        $branches = $this->service->getOrganizationsWithBranches($organization, false);
-        return view('admin.organizations.show', compact('organization', 'branches'));
+        $branches = OrganizationService::getOrganizationsWithBranches($organization, false);
+        $departments = DepartmentService::getDepartmentsWithDescendants();
+
+        return view('admin.organizations.show', compact('organization', 'branches', 'departments'));
     }
 
     public function edit(Organization $organization): View

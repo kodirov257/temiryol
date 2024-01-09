@@ -109,4 +109,11 @@ return [
         'branches' => 'Filiallari',
         'parent' => 'Bosh Tashkilot',
     ],
+
+    'department' => [
+        'add' => 'Bo`lim qo`shmoq',
+        'name' => 'Bo`lim',
+        'parent' => 'Bosh bo`lim',
+        'sub' => 'Ichki bo`limlar',
+    ],
 ];

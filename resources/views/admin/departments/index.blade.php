@@ -1,6 +1,6 @@
 <x-admin-page-layout>
     @section('content')
-        <p><a href="{{ route('dashboard.regions.create') }}" class="btn btn-success">{{ trans('adminlte.region.add') }}</a></p>
+        <p><a href="{{ route('dashboard.departments.create') }}" class="btn btn-success">{{ trans('adminlte.department.add') }}</a></p>
 
         <div class="card mb-4">
             <div class="card-body">
@@ -28,20 +28,20 @@
                 <td>Nomi</td>
                 <td>Номи</td>
                 <td>Название</td>
-                <td>Slug</td>
+                <td>{{ __('adminlte.organization.name') }}</td>
             </tr>
             </thead>
             <tbody>
-            @foreach($regions as $region)
+            @foreach($departments as $department)
                 <tr>
-                    <td><a href="{{ route('dashboard.regions.show', $region) }}">{{ $region->name_uz }}</a></td>
-                    <td><a href="{{ route('dashboard.regions.show', $region) }}">{{ $region->name_uz_cy }}</a></td>
-                    <td><a href="{{ route('dashboard.regions.show', $region) }}">{{ $region->name_ru }}</a></td>
-                    <td>{{ $region->slug }}</td>
+                    <td><a href="{{ route('dashboard.departments.show', $department) }}">{{ $department->name_uz }}</a></td>
+                    <td><a href="{{ route('dashboard.departments.show', $department) }}">{{ $department->name_uz_cy }}</a></td>
+                    <td><a href="{{ route('dashboard.departments.show', $department) }}">{{ $department->name_ru }}</a></td>
+                    <td><a href="{{ route('dashboard.organizations.show', $department->organization) }}">{{ $department->organization->name }}</a></td>
                 </tr>
             @endforeach
             </tbody>
         </table>
-        {{ $regions->links() }}
+        {{ $departments->links() }}
     @endsection
 </x-admin-page-layout>

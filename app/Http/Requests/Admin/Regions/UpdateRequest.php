@@ -4,6 +4,7 @@ namespace App\Http\Requests\Admin\Regions;
 
 use App\Models\Region;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 /**
  * @property string $name_uz
@@ -29,7 +30,7 @@ class UpdateRequest extends FormRequest
             'name_uz_cy' => 'required|string|max:255|unique:regions,name_uz_cy,' . $this->region->id . ',id,parent_id,' . ($this->region->parent_id ?: 'NULL'),
             'name_ru' => 'required|string|max:255|unique:regions,name_ru,' . $this->region->id . ',id,parent_id,' . ($this->region->parent_id ?: 'NULL'),
             'name_en' => 'required|string|max:255|unique:regions,name_en,' . $this->region->id . ',id,parent_id,' . ($this->region->parent_id ?: 'NULL'),
-//            'slug' => ['nullable', 'string', 'max:255', Rule::unique('regions')->ignore($this->region->id)],
+            'type' => ['required', 'string', Rule::in(array_keys(Region::typeList()))],
             'slug' => 'nullable|string|max:255|unique:regions,slug,' . $this->region->id . ',id,parent_id,' . ($this->region->parent_id ?: 'NULL'),
         ];
     }

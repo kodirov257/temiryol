@@ -25,7 +25,7 @@
         <table class="table table-bordered table-striped">
             <thead>
             <tr>
-                <td>{{ __('adminlte.organization.name') }}</td>
+                <td>{{ __('adminlte.name') }}</td>
                 <td>{{ __('adminlte.type') }}</td>
                 <td>{{ __('adminlte.region.name') }}</td>
             </tr>

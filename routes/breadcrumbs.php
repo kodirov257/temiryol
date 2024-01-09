@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Department;
 use App\Models\Organization;
 use App\Models\Region;
 use App\Models\User\User;
@@ -93,4 +94,31 @@ Breadcrumbs::for('dashboard.organizations.show', function (Crumbs $crumbs, Organ
 Breadcrumbs::for('dashboard.organizations.edit', function (Crumbs $crumbs, Organization $organization) {
     $crumbs->parent('dashboard.organizations.show', $organization);
     $crumbs->push(trans('adminlte.edit'), route('dashboard.organizations.edit', $organization));
+});
+
+
+// Departments
+
+Breadcrumbs::for('dashboard.departments.index', function (Crumbs $crumbs) {
+    $crumbs->parent('dashboard.home');
+    $crumbs->push(trans('menu.departments'), route('dashboard.departments.index'));
+});
+
+Breadcrumbs::for('dashboard.departments.create', function (Crumbs $crumbs) {
+    $crumbs->parent('dashboard.departments.index');
+    $crumbs->push(trans('adminlte.create'), route('dashboard.departments.create'));
+});
+
+Breadcrumbs::for('dashboard.departments.show', function (Crumbs $crumbs, Department $department) {
+    if ($parent = $department->parent) {
+        $crumbs->parent('dashboard.departments.show', $parent);
+    } else {
+        $crumbs->parent('dashboard.departments.index');
+    }
+    $crumbs->push($department->name, route('dashboard.departments.show', $department));
+});
+
+Breadcrumbs::for('dashboard.departments.edit', function (Crumbs $crumbs, Department $department) {
+    $crumbs->parent('dashboard.departments.show', $department);
+    $crumbs->push(trans('adminlte.edit'), route('dashboard.departments.edit', $department));
 });

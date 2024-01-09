@@ -342,6 +342,12 @@ return [
             'icon' => 'fas fa-fw fa-file',
             'can'  => 'manage-organizations',
         ],
+        [
+            'text' => 'departments',
+            'url'  => '/dashboard/departments',
+            'icon' => 'fas fa-fw fa-file',
+            'can'  => 'manage-departments',
+        ],
 //        [
 //            'text' => 'change_password',
 //            'url'  => '/dashboard/settings',

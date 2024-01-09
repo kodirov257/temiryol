@@ -59,6 +59,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
         Route::resource('regions', 'RegionController');
         Route::resource('organizations', 'OrganizationController');
+        Route::resource('departments', 'DepartmentController');
 
         Route::post('/darkmode/toggle', [DarkModeController::class, 'toggle'])
             ->name('darkmode.toggle');

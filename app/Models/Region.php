@@ -55,6 +55,8 @@ class Region extends BaseModel
 
     protected $table = 'regions';
 
+    public int $depth;
+
     protected $fillable = ['name_uz', 'name_uz_cy', 'name_ru', 'name_en', 'parent_id', 'type', 'slug'];
 
     public function sluggable(): array

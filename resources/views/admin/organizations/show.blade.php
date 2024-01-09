@@ -64,7 +64,7 @@
             </div>
         </div>
 
-        <div class="card" id="states">
+        <div class="card" id="branches">
             <div class="card-header card-green with-border">{{ __('adminlte.organization.branches') }}</div>
             <div class="card-body">
                 <p><a href="{{ route('dashboard.organizations.create', ['parent' => $organization->id]) }}" class="btn btn-success">{{ __('adminlte.organization.add') }}</a></p>
@@ -87,6 +87,33 @@
                             </td>
                             <td>{{ $branch->typeName() }}</td>
                             <td><a href="{{ route('dashboard.regions.show', $branch->region) }}">{{ $branch->region->place }}</a></td>
+                        </tr>
+                    @endforeach
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card" id="departments">
+            <div class="card-header card-green with-border">{{ __('menu.departments') }}</div>
+            <div class="card-body">
+                <p><a href="{{ route('dashboard.departments.create', ['organization_id' => $organization->id]) }}" class="btn btn-success">{{ __('adminlte.department.add') }}</a></p>
+
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <td>{{ __('adminlte.name') }}</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    @foreach ($departments as $department)
+                        <tr>
+                            <td>
+                                @for ($i = 0; $i < $department->depth; $i++) &mdash; @endfor
+                                <a href="{{ route('dashboard.departments.show', $department) }}">{{ $department->name }}</a>
+                            </td>
                         </tr>
                     @endforeach
 
