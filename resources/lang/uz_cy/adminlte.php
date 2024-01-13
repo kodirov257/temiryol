@@ -6,6 +6,7 @@ return [
     'full_name'                   => 'Тўлиқ исми',
     'first_name'                  => 'Исми',
     'last_name'                   => 'Шарифи',
+    'middle_name'                 => 'Middle name',
     'username'                    => 'Фойдаланувчи номи',
     'email'                       => 'Електрон почтаси',
     'email_or_username'           => 'Електрон почта ёки фойдаланувчи номи',
@@ -40,6 +41,7 @@ return [
     'setup_complete'              => 'Созлашни якунламоқ',
 
     'create' => 'Яратмоқ',
+    'add' => 'Қўшмоқ',
     'save' => 'Сақламоқ',
     'search' => 'Қидирмоқ',
     'clear' => 'Тозаламоқ',
@@ -63,6 +65,7 @@ return [
     'male' => 'Эркак',
     'female' => 'Аёл',
     'type' => 'Тури',
+    'employees' => 'Ходимлар',
     'created_by' => 'томонидан яратилган',
     'updated_by' => 'томонидан янгиланган',
     'created_at' => 'Яратилган вақт',
@@ -112,8 +115,13 @@ return [
 
     'department' => [
         'add' => 'Бўлим қўшмоқ',
+        'add_employee' => 'Ходим қўшмоқ',
         'name' => 'Бўлим',
         'parent' => 'Бош бўлим',
         'sub' => 'Ички Бўлимлар',
+        'employee_added' => 'Ходим муваффақиятли қўшилди.',
+        'employee_not_added' => 'Ходим қўшилмади.',
+        'employee_removed' => 'Ходим муваффақиятли олиб ташланди.',
+        'employee_not_removed' => 'Ходим олиб ташланмади.',
     ],
 ];

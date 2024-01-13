@@ -16,6 +16,7 @@ use Illuminate\Validation\Rule;
  * @property int $status
  * @property string $first_name
  * @property string $last_name
+ * @property string $middle_name
  * @property Carbon $birth_date
  * @property int $gender
  * @property string $address
@@ -48,6 +49,7 @@ class UpdateRequest extends FormRequest
             'password' => 'nullable|string',
             'first_name' => 'nullable|string|max:255',
             'last_name' => 'nullable|string|max:255',
+            'middle_name' => 'nullable|string|max:255',
             'birth_date' => 'nullable|date_format:Y-m-d',
             'gender' => ['numeric', Rule::in(array_keys(Profile::gendersList()))],
             'address' => 'nullable|string',

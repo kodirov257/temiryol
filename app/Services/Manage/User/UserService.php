@@ -38,6 +38,7 @@ class UserService
                 'user_id' => $user->id,
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
+                'middle_name' => $request->middle_name,
                 'birth_date' => $request->birth_date,
                 'gender' => $request->gender,
                 'address' => $request->address,
@@ -75,6 +76,7 @@ class UserService
                 $user->profile()->create([
                     'first_name' => $request->first_name,
                     'last_name' => $request->last_name,
+                    'middle_name' => $request->middle_name,
                     'birth_date' => $request->birth_date,
                     'gender' => $request->gender,
                     'address' => $request->address,
@@ -85,6 +87,7 @@ class UserService
                 $user->profile->update([
                     'first_name' => $request->first_name ?? $user->profile->first_name,
                     'last_name' => $request->last_name ?? $user->profile->last_name,
+                    'middle_name' => $request->middle_name ?? $user->profile->middle_name,
                     'birth_date' => $request->birth_date ?? $user->profile->birth_date,
                     'gender' => $request->gender ?? $user->profile->gender,
                     'address' => $request->address ?? $user->profile->address,
@@ -101,6 +104,7 @@ class UserService
                 $user->profile->update([
                     'first_name' => $request->first_name ?? $user->profile->first_name,
                     'last_name' => $request->last_name ?? $user->profile->last_name,
+                    'middle_name' => $request->middle_name ?? $user->profile->middle_name,
                     'birth_date' => $request->birth_date ?? $user->profile->birth_date,
                     'gender' => $request->gender ?? $user->profile->gender,
                     'address' => $request->address ?? $user->profile->address,

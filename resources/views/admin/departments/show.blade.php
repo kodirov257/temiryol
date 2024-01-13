@@ -2,6 +2,8 @@
     @section('content')
         <div class="d-flex flex-row mb-3">
             <a href="{{ route('dashboard.departments.edit', $department) }}" class="btn btn-primary mr-1">{{ __('adminlte.edit') }}</a>
+            <a href="{{ route('dashboard.departments.create', ['parent' => $department->id]) }}" class="btn btn-success mr-1">{{ __('adminlte.department.add') }}</a>
+            <a href="{{ route('dashboard.departments.employees.add.form', $department) }}" class="btn btn-dark mr-1">{{ __('adminlte.department.add_employee') }}</a>
             <form method="POST" action="{{ route('dashboard.departments.destroy', $department) }}" class="mr-1">
                 @csrf
                 @method('DELETE')
@@ -76,11 +78,56 @@
                     </thead>
                     <tbody>
 
-                    @foreach ($branches as $branch)
+                    @foreach ($childDepartments as $branch)
                         <tr>
                             <td>
                                 @for ($i = 0; $i < $branch->depth; $i++) &mdash; @endfor
                                 <a href="{{ route('dashboard.departments.show', $branch) }}">{{ $branch->name }}</a>
+                            </td>
+                        </tr>
+                    @endforeach
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card" id="workers">
+            <div class="card-header card-green with-border">{{ __('adminlte.employees') }}</div>
+            <div class="card-body">
+                <p><a href="{{ route('dashboard.departments.employees.add.form', ['department' => $department]) }}" class="btn btn-success">{{ __('adminlte.department.add_employee') }}</a></p>
+
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <td>{{ __('adminlte.full_name') }}</td>
+                        <td>{{ __('adminlte.name') }}</td>
+                        <td>{{ __('adminlte.email') }}</td>
+                        <td>{{ __('adminlte.birth_date') }}</td>
+                        <td></td>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @php /* @var $employees \App\Models\User\User[] */ @endphp
+                    @foreach ($employees as $employee)
+                        <tr>
+                            <td>
+                                <a href="{{ route('dashboard.users.show', $employee) }}">{{ $employee->profile->fullName }}</a>
+                            </td>
+                            <td>
+                                <a href="{{ route('dashboard.users.show', $employee) }}">{{ $employee->name }}</a>
+                            </td>
+                            <td>
+                                <a href="{{ route('dashboard.users.show', $employee) }}">{{ $employee->email }}</a>
+                            </td>
+                            <td>{{ $employee->profile->birth_date ? $employee->profile->birth_date->format('d.m.Y') : '' }}</td>
+                            <td>
+                                <form method="POST" action="{{ route('dashboard.departments.employees.remove', ['department' => $department, 'employee' => $employee]) }}" class="mr-1">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-danger" onclick="return confirm('{{ __('adminlte.delete_confirmation_message') }}')"><i class="fas fa-fw fa-trash-alt"></i></button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach

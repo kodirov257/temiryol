@@ -33,10 +33,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property User $updatedBy
  *
  * @property string $name
+ * @property string $fullName
+ * @property string $hierarchy
  *
  * @mixin Eloquent
  */
-class Department extends Model
+class Department extends BaseModel
 {
     use /*HasFactory, */Sluggable;
 
@@ -57,12 +59,32 @@ class Department extends Model
         ];
     }
 
+    public function getFullName(): string
+    {
+        return $this->name . ($this->parent ? ', ' . $this->parent->getFullName() : '');
+    }
+
+    public function getHierarchy(): string
+    {
+        return $this->getFullName() . ', ' . $this->organization->fullName;
+    }
+
 
     ########################################### Mutators
 
     public function getNameAttribute(): string
     {
         return htmlspecialchars_decode(LanguageHelper::getName($this));
+    }
+
+    public function getFullNameAttribute(): string
+    {
+        return $this->getFullName();
+    }
+
+    public function getHierarchyAttribute(): string
+    {
+        return $this->getHierarchy();
     }
 
     ###########################################

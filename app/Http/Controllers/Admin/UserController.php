@@ -76,7 +76,7 @@ class UserController extends Controller
             $genre = $this->service->store($request);
             session()->flash('message', 'запись обновлён ');
             return redirect()->route('dashboard.users.show', $genre);
-        } catch (\Exception $e) {
+        } catch (\Exception|\Throwable $e) {
             return back()->with('error', $e->getMessage());
         }
     }

@@ -33,6 +33,16 @@
                                     @endif
                                 </td>
                             </tr>
+                            <tr>
+                                <th>{{ trans('adminlte.department.name') }}</th>
+                                <td>
+                                    @if($user->profile->department)
+                                        <a href="{{ route('dashboard.departments.show', $user->profile->department) }}">
+                                            {{ $user->profile->department->hierarchy }}
+                                        </a>
+                                    @endif
+                                </td>
+                            </tr>
                             <tr><th>{{ trans('adminlte.created_at') }}</th><td>{{ $user->created_at }}</td></tr>
                             <tr><th>{{ trans('adminlte.updated_at') }}</th><td>{{ $user->updated_at }}</td></tr>
                             </tbody>
@@ -70,6 +80,10 @@
                                 <tr>
                                     <th>@lang('adminlte.last_name')</th>
                                     <td>{{ $user->profile->last_name }}</td>
+                                </tr>
+                                <tr>
+                                    <th>@lang('adminlte.middle_name')</th>
+                                    <td>{{ $user->profile->middle_name }}</td>
                                 </tr>
                                 <tr>
                                     <th>@lang('adminlte.birth_date')</th>

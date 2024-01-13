@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Helpers\LanguageHelper;
 use App\Http\Resources\Search\RegionSearchCollection;
+use App\Http\Resources\Search\UserSearchCollection;
 use App\Models\Region;
+use App\Models\User\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -33,6 +36,39 @@ class SearchController extends BaseController
             $regionCollection = (new RegionSearchCollection($regions))->toArray($request);
 
             return $this->sendResponse(['regions' => $regionCollection, 'total' => $totalLength]);
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage(), [], 400);
+        }
+    }
+
+    public function searchUsers(Request $request): JsonResponse
+    {
+        try {
+            if (!empty($value = $request->get('name'))) {
+                $regions = User::select(['users.*', 'p.*'])
+                    ->leftJoin('profiles as p', 'users.id', '=', 'p.user_id')
+                    ->where('status', User::STATUS_ACTIVE)
+                    ->where(function (Builder $query) use ($value) {
+                        $query->where('name', 'ilike', '%' . $value . '%')
+                            ->orWhere('email', 'ilike', '%' . $value . '%')
+                            ->orWhere('first_name', 'ilike', '%' . $value . '%')
+                            ->orWhere('last_name', 'ilike', '%' . $value . '%')
+                            ->orWhere('middle_name', 'ilike', '%' . $value . '%')
+                            ->orWhereRaw("concat(first_name, ' ', last_name, ' ', coalesce(middle_name, '')) ilike '%{$value}%'");
+                    })
+                    ->paginate(10);
+            } else {
+                $regions = User::select(['users.*', 'p.*'])
+                    ->leftJoin('profiles as p', 'users.id', '=', 'p.user_id')
+                    ->orderBy('p.last_name')
+                    ->orderBy('p.first_name')
+                    ->orderBy('name')->paginate(10);
+            }
+
+            $totalLength = $regions->total();
+            $regionCollection = (new UserSearchCollection($regions))->toArray($request);
+
+            return $this->sendResponse(['users' => $regionCollection, 'total' => $totalLength]);
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage(), [], 400);
         }

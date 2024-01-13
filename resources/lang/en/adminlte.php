@@ -6,6 +6,7 @@ return [
     'full_name'                   => 'Full name',
     'first_name'                  => 'First name',
     'last_name'                   => 'Last name',
+    'middle_name'                 => 'Middle name',
     'username'                    => 'Username',
     'email'                       => 'Email',
     'email_or_username'           => 'Email or Username',
@@ -40,6 +41,7 @@ return [
     'setup_complete'              => 'Complete setup',
 
     'create' => 'Create',
+    'add' => 'Add',
     'save' => 'Save',
     'search' => 'Search',
     'clear' => 'Clear',
@@ -63,6 +65,7 @@ return [
     'male' => 'Male',
     'female' => 'Female',
     'type' => 'Type',
+    'employees' => 'Employees',
     'created_by' => 'Created by',
     'updated_by' => 'Updated by',
     'created_at' => 'Created at',
@@ -113,8 +116,13 @@ return [
 
     'department' => [
         'add' => 'Add Department',
+        'add_employee' => 'Add Employee',
         'name' => 'Department',
         'parent' => 'Parent Department',
         'sub' => 'Sub Departments',
+        'employee_added' => 'Employee is added successfully.',
+        'employee_not_added' => 'Employee is not added.',
+        'employee_removed' => 'Employee is removed successfully.',
+        'employee_not_removed' => 'Employee is not removed.',
     ],
 ];

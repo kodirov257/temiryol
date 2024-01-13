@@ -6,6 +6,7 @@ use App\Helpers\LanguageHelper;
 use App\Http\Requests\Admin\Departments\CreateRequest;
 use App\Http\Requests\Admin\Departments\UpdateRequest;
 use App\Models\Department;
+use App\Models\User\User;
 
 class DepartmentService
 {
@@ -38,6 +39,32 @@ class DepartmentService
             'parent_id' => $request->parent_id,
             'slug' => $request->slug,
         ]);
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    public function addWorker(int $id, int $workerId): bool
+    {
+        $department = Department::findOrFail($id);
+        $worker = User::findOrFail($workerId);
+        $workerProfile = $worker->profile()->firstOrFail();
+
+        $workerProfile->department()->associate($department);
+        return $workerProfile->saveOrFail();
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    public function removeWorker(int $id, int $workerId): bool
+    {
+        $department = Department::findOrFail($id);
+        $worker = User::findOrFail($workerId);
+        $workerProfile = $worker->profile()->firstOrFail();
+
+        $workerProfile->department()->disassociate();
+        return $workerProfile->saveOrFail();
     }
 
     public static function getDescendantIds(Department $department, array &$ids): void

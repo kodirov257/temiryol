@@ -36,6 +36,7 @@ Route::group(['as' => 'api.', 'namespace' => 'Api'], function () {
     });
 
     Route::get('/search-regions', 'SearchController@searchRegions');
+    Route::get('/search-users', 'SearchController@searchUsers');
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

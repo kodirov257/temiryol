@@ -6,6 +6,7 @@ return [
     'full_name'                   => 'Полное имя',
     'first_name'                  => 'Имя',
     'last_name'                   => 'Фамилия',
+    'middle_name'                 => 'Отчество',
     'username'                    => 'Имя пользователя',
     'email'                       => 'Почта',
     'email_or_username'           => 'Почта или Имя пользователя',
@@ -40,6 +41,7 @@ return [
     'setup_complete'              => 'Завершить настройку',
 
     'create' => 'Добавить',
+    'add' => 'Добавить',
     'save' => 'Добавить',
     'search' => 'Искать',
     'clear' => 'Очистить',
@@ -63,6 +65,7 @@ return [
     'male' => 'Мужчина',
     'female' => 'Женщина',
     'type' => 'Тип',
+    'employees' => 'Сотрудники',
     'created_by' => 'Добавил',
     'updated_by' => 'Редактировал',
     'created_at' => 'Добавлено',
@@ -113,8 +116,13 @@ return [
 
     'department' => [
         'add' => 'Добавить Отдел',
+        'add_employee' => 'Добавить Сотрудника',
         'name' => 'Отдел',
         'parent' => 'Родительский Отдел',
         'sub' => 'Внутренние Отделы',
+        'employee_added' => 'Рабочий добавлен успешно.',
+        'employee_not_added' => 'Работник не добавлен.',
+        'employee_removed' => 'Рабочий удалён успешно.',
+        'employee_not_removed' => 'Работник не удалён.',
     ],
 ];

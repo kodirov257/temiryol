@@ -35,14 +35,88 @@ return new class extends Migration
             $table->foreign('updated_by')->references('id')->on('users')->onDelete('restrict');
         });
 
+        $organizationId = DB::table('organizations')->where('type', Organization::SUBSIDIARY)->where('slug', 'andijan-mechanical-factory')->first()->id;
+
         DB::table('departments')->insert([
-            'name_uz'           => '',
-            'name_uz_cy'        => '',
-            'name_ru'           => '',
-            'name_en'           => '',
-            'organization_id'   => DB::table('regions')->where('type', Organization::SUBSIDIARY)->where('slug', 'andijan-mechanical-factory')->first()->id,
+            'name_uz'           => 'Asosiy omborxona',
+            'name_uz_cy'        => 'Асосий омборхона',
+            'name_ru'           => 'Центральный склад',
+            'name_en'           => 'Central warehouse',
+            'organization_id'   => $organizationId,
             'parent_id'         => null,
-            'slug'              => '',
+            'slug'              => 'central-warehouse',
+            'created_by'        => 1,
+            'updated_by'        => 1,
+            'created_at'        => Carbon::now(),
+            'updated_at'        => Carbon::now(),
+        ]);
+
+        DB::table('departments')->insert([
+            'name_uz'           => 'BIX',
+            'name_uz_cy'        => 'БИХ',
+            'name_ru'           => 'БИХ',
+            'name_en'           => 'BIH',
+            'organization_id'   => $organizationId,
+            'parent_id'         => DB::table('departments')->where('slug', 'central-warehouse')->first()->id,
+            'slug'              => 'bih',
+            'created_by'        => 1,
+            'updated_by'        => 1,
+            'created_at'        => Carbon::now(),
+            'updated_at'        => Carbon::now(),
+        ]);
+
+        $bihId = DB::table('departments')->where('slug', 'bih')->first()->id;
+
+        DB::table('departments')->insert([
+            'name_uz'           => 'Omborxona 1',
+            'name_uz_cy'        => 'Омборхона 1',
+            'name_ru'           => 'Склад 1',
+            'name_en'           => 'Warehouse 1',
+            'organization_id'   => $organizationId,
+            'parent_id'         => $bihId,
+            'slug'              => 'warehouse-1',
+            'created_by'        => 1,
+            'updated_by'        => 1,
+            'created_at'        => Carbon::now(),
+            'updated_at'        => Carbon::now(),
+        ]);
+
+        DB::table('departments')->insert([
+            'name_uz'           => 'Omborxona 2',
+            'name_uz_cy'        => 'Омборхона 2',
+            'name_ru'           => 'Склад 2',
+            'name_en'           => 'Warehouse 2',
+            'organization_id'   => $organizationId,
+            'parent_id'         => $bihId,
+            'slug'              => 'warehouse-2',
+            'created_by'        => 1,
+            'updated_by'        => 1,
+            'created_at'        => Carbon::now(),
+            'updated_at'        => Carbon::now(),
+        ]);
+
+        DB::table('departments')->insert([
+            'name_uz'           => 'Omborxona 3',
+            'name_uz_cy'        => 'Омборхона 3',
+            'name_ru'           => 'Склад 3',
+            'name_en'           => 'Warehouse 3',
+            'organization_id'   => $organizationId,
+            'parent_id'         => $bihId,
+            'slug'              => 'warehouse-3',
+            'created_by'        => 1,
+            'updated_by'        => 1,
+            'created_at'        => Carbon::now(),
+            'updated_at'        => Carbon::now(),
+        ]);
+
+        DB::table('departments')->insert([
+            'name_uz'           => 'Omborxona 4',
+            'name_uz_cy'        => 'Омборхона 4',
+            'name_ru'           => 'Склад 4',
+            'name_en'           => 'Warehouse 4',
+            'organization_id'   => $organizationId,
+            'parent_id'         => $bihId,
+            'slug'              => 'warehouse-4',
             'created_by'        => 1,
             'updated_by'        => 1,
             'created_at'        => Carbon::now(),

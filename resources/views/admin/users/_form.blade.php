@@ -67,6 +67,16 @@
                         <span class="invalid-feedback"><strong>{{ $errors->first('last_name') }}</strong></span>
                     @endif
                 </div>
+
+                <div class="form-group">
+                    {!! Html::label(trans('adminlte.middle_name'), 'middle_name')->class('col-form-label'); !!}
+                    {!! Html::text('middle_name', old('middle_name', $user ? ($user->profile->middle_name ?? null) : null))
+                            ->class('form-control' . ($errors->has('middle_name') ? ' is-invalid' : '')) !!}
+                    @if ($errors->has('middle_name'))
+                        <span class="invalid-feedback"><strong>{{ $errors->first('middle_name') }}</strong></span>
+                    @endif
+                </div>
+
                 <div class="form-group">
                     {!! Html::label(trans('adminlte.birth_date'), 'birth_date')->class('col-form-label'); !!}
                     {!! Html::date('birth_date', old('birth_date', $user ? ($user->profile->birth_date ?? null) : null))

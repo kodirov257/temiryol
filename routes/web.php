@@ -60,6 +60,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::resource('regions', 'RegionController');
         Route::resource('organizations', 'OrganizationController');
         Route::resource('departments', 'DepartmentController');
+        Route::group(['prefix' => 'departments/{department}', 'as' => 'departments.'], function () {
+            Route::get('employees/add', 'DepartmentController@addWorkerForm')->name('employees.add.form');
+            Route::post('employees/add', 'DepartmentController@addWorker')->name('employees.add');
+            Route::delete('employees/{employee}/delete', 'DepartmentController@removeWorker')->name('employees.remove');
+        });
 
         Route::post('/darkmode/toggle', [DarkModeController::class, 'toggle'])
             ->name('darkmode.toggle');

@@ -122,3 +122,8 @@ Breadcrumbs::for('dashboard.departments.edit', function (Crumbs $crumbs, Departm
     $crumbs->parent('dashboard.departments.show', $department);
     $crumbs->push(trans('adminlte.edit'), route('dashboard.departments.edit', $department));
 });
+
+Breadcrumbs::for('dashboard.departments.employees.add.form', function (Crumbs $crumbs, Department $department) {
+    $crumbs->parent('dashboard.departments.show', $department);
+    $crumbs->push(trans('adminlte.department.add_employee'), route('dashboard.departments.employees.add.form', $department));
+});

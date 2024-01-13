@@ -52,7 +52,7 @@
                 @if(!request()->get('organization_id') || !request()->get('parent'))
                     <div class="form-group">
                         {!! Html::label(__('adminlte.organization.name'), 'organization_id')->class('col-form-label') !!}
-                        {!! Html::select('organization_id', $organizationList, old('organization_id', $department->organization_id ?? null))
+                        {!! Html::select('organization_id', $organizationList, old('organization_id', $parent->organization_id ?? $department->organization_id ?? null))
                                 ->id('organization_id')->class('form-control' . ($errors->has('organization_id') ? ' is-invalid' : '')) !!}
                         @if($errors->has('organization_id'))
                             <span class="invalid-feedback"><strong>{{ $errors->first('organization_id') }}</strong></span>

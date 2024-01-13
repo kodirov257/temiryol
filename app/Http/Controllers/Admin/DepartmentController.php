@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Helpers\LanguageHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Departments\CreateRequest;
 use App\Http\Requests\Admin\Departments\UpdateRequest;
 use App\Models\Department;
+use App\Models\User\User;
 use App\Services\Manage\DepartmentService;
 use App\Services\Manage\OrganizationService;
-use App\Services\Manage\RegionService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -66,15 +65,24 @@ class DepartmentController extends Controller
 
     public function store(CreateRequest $request): RedirectResponse
     {
-        $department = $this->service->create($request);
-        session()->flash('message', 'запись обновлён ');
-        return redirect()->route('dashboard.departments.show', $department);
+        try {
+            $department = $this->service->create($request);
+            session()->flash('message', 'запись обновлён ');
+            return redirect()->route('dashboard.departments.show', $department);
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
     }
 
     public function show(Department $department): View
     {
+        $descendantIds = [];
         $childDepartments = DepartmentService::getDepartmentsWithDescendants($department, false);
-        return view('admin.departments.show', compact('department', 'childDepartments'));
+        DepartmentService::getDescendantIds($department, $descendantIds);
+        $employees = User::leftJoin('profiles as p', 'users.id', '=', 'p.user_id')
+            ->whereIn('p.department_id', $descendantIds)->get();
+
+        return view('admin.departments.show', compact('department', 'childDepartments', 'employees'));
     }
 
     public function edit(Department $department): View
@@ -87,9 +95,48 @@ class DepartmentController extends Controller
 
     public function update(UpdateRequest $request, Department $department): RedirectResponse
     {
-        $this->service->update($department->id, $request);
-        session()->flash('message', 'запись обновлён ');
-        return redirect()->route('dashboard.departments.show', $department);
+        try {
+            $this->service->update($department->id, $request);
+            session()->flash('message', 'запись обновлён ');
+            return redirect()->route('dashboard.departments.show', $department);
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function addWorkerForm(Department $department): View
+    {
+        return view('admin.departments.add_worker', compact('department'));
+    }
+
+    public function addWorker(Request $request, Department $department): RedirectResponse
+    {
+        try {
+            $request->validate([
+                'worker_id' => 'required|int|min:1|exists:users,id',
+            ]);
+
+            if (!$this->service->addWorker($department->id, $request->worker_id)) {
+                throw new \RuntimeException(__('adminlte.department.employee_not_added'));
+            }
+            session()->flash('message', __('adminlte.department.employee_added'));
+            return redirect()->route('dashboard.departments.show', $department);
+        } catch (\Exception|\Throwable $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function removeWorker(Department $department, User $worker): RedirectResponse
+    {
+        try {
+            if ($this->service->removeWorker($department->id, $worker->id)) {
+                throw new \RuntimeException(__('adminlte.department.employee_not_removed'));
+            }
+            session()->flash('message', __('adminlte.department.employee_removed'));
+            return redirect()->route('dashboard.departments.show', $department);
+        } catch (\Exception|\Throwable $e) {
+            return back()->with('error', $e->getMessage());
+        }
     }
 
     public function destroy(Department $department): RedirectResponse

@@ -34,10 +34,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property User $updatedBy
  *
  * @property string $name
+ * @property string $fullName
  *
  * @mixin Eloquent
  */
-class Organization extends Model
+class Organization extends BaseModel
 {
     use /*HasFactory, */Sluggable;
 
@@ -76,12 +77,22 @@ class Organization extends Model
         return self::typeList()[$this->type];
     }
 
+    public function getFullName(): string
+    {
+        return $this->name . ($this->parent ? ', ' . $this->parent->getFullName() : '');
+    }
+
 
     ########################################### Mutators
 
     public function getNameAttribute(): string
     {
         return htmlspecialchars_decode(LanguageHelper::getName($this));
+    }
+
+    public function getFullNameAttribute(): string
+    {
+        return $this->getFullName();
     }
 
     ###########################################
