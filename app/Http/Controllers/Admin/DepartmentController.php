@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Departments\CreateRequest;
 use App\Http\Requests\Admin\Departments\UpdateRequest;
 use App\Models\Department;
+use App\Models\Organization;
 use App\Models\User\User;
 use App\Services\Manage\DepartmentService;
 use App\Services\Manage\OrganizationService;
@@ -38,6 +39,10 @@ class DepartmentController extends Controller
         }
 
         if (!empty($value = $request->get('organization_id'))) {
+            // $organization = Organization::findOrFail($value);
+            // $organizationIds = [];
+            // OrganizationService::getDescendantIds($organization, $organizationIds);
+            // $query->whereIn('organization_id', $organizationIds);
             $query->where('organization_id', $value);
         }
 

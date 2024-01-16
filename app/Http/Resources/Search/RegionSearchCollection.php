@@ -15,7 +15,7 @@ class RegionSearchCollection extends ResourceCollection
     public function toArray(Request $request): array
     {
         /*return [
-            'regions' => SearchResource::collection($this),
+            'regions' => RegionSearchResource::collection($this),
         ];*/
 
         return RegionSearchResource::collection($this)->toArray($request);

@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Organizations\CreateRequest;
 use App\Http\Requests\Admin\Organizations\UpdateRequest;
 use App\Models\Organization;
+use App\Models\Region;
 use App\Services\Manage\DepartmentService;
 use App\Services\Manage\OrganizationService;
+use App\Services\Manage\RegionService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +24,7 @@ class OrganizationController extends Controller
         $this->service = $service;
     }
 
-    public function index(Request $request): View
+    public function index(): View
     {
         $organizations = OrganizationService::getOrganizationsWithBranches();
 

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Helpers\LanguageHelper;
+use App\Http\Resources\Search\DepartmentSearchCollection;
 use App\Http\Resources\Search\RegionSearchCollection;
 use App\Http\Resources\Search\UserSearchCollection;
+use App\Models\Department;
 use App\Models\Region;
 use App\Models\User\User;
 use Illuminate\Database\Eloquent\Builder;
@@ -69,6 +71,31 @@ class SearchController extends BaseController
             $regionCollection = (new UserSearchCollection($regions))->toArray($request);
 
             return $this->sendResponse(['users' => $regionCollection, 'total' => $totalLength]);
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage(), [], 400);
+        }
+    }
+    public function searchDepartments(Request $request): JsonResponse
+    {
+        try {
+            if (!empty($value = $request->get('name'))) {
+                $departments = Department::orderBy('name_' . LanguageHelper::getCurrentLanguagePrefix())
+                    ->where(function (Builder $query) use ($value) {
+                        $query->where('name_uz', 'ilike', '%' . $value . '%')
+                            ->orWhere('name_uz_cy', 'ilike', '%' . $value . '%')
+                            ->orWhere('name_ru', 'ilike', '%' . $value . '%')
+                            ->orWhere('name_en', 'ilike', '%' . $value . '%')
+                            ->orWhere('slug', 'ilike', '%' . $value . '%');
+                    })
+                    ->paginate(10);
+            } else {
+                $departments = Department::orderBy('name_' . LanguageHelper::getCurrentLanguagePrefix())->paginate(10);
+            }
+
+            $totalLength = $departments->total();
+            $departmentCollection = (new DepartmentSearchCollection($departments))->toArray($request);
+
+            return $this->sendResponse(['departments' => $departmentCollection, 'total' => $totalLength]);
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage(), [], 400);
         }

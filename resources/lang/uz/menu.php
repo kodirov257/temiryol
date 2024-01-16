@@ -22,4 +22,5 @@ return [
     'regions'                       => 'Hududlar',
     'organizations'                 => 'Tashkilotlar',
     'departments'                   => 'Bo`limlar',
+    'instruments'                   => 'Asbob-uskunalar',
 ];

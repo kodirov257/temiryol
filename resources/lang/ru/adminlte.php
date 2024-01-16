@@ -65,6 +65,8 @@ return [
     'male' => 'Мужчина',
     'female' => 'Женщина',
     'type' => 'Тип',
+    'quantity' => 'Количество',
+    'weight' => 'Вес',
     'employees' => 'Сотрудники',
     'created_by' => 'Добавил',
     'updated_by' => 'Редактировал',
@@ -124,5 +126,10 @@ return [
         'employee_not_added' => 'Работник не добавлен.',
         'employee_removed' => 'Рабочий удалён успешно.',
         'employee_not_removed' => 'Работник не удалён.',
+    ],
+
+    'instrument' => [
+        'add' => 'Добавить Инструмент',
+        'name' => 'Инструмент',
     ],
 ];

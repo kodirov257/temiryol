@@ -22,4 +22,5 @@ return [
     'regions'                       => 'Regions',
     'organizations'                 => 'Organizations',
     'departments'                   => 'Departments',
+    'instruments'                   => 'Instruments',
 ];

@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Department;
+use App\Models\Instrument;
 use App\Models\Organization;
 use App\Models\Region;
 use App\Models\User\User;
@@ -126,4 +127,27 @@ Breadcrumbs::for('dashboard.departments.edit', function (Crumbs $crumbs, Departm
 Breadcrumbs::for('dashboard.departments.employees.add.form', function (Crumbs $crumbs, Department $department) {
     $crumbs->parent('dashboard.departments.show', $department);
     $crumbs->push(trans('adminlte.department.add_employee'), route('dashboard.departments.employees.add.form', $department));
+});
+
+
+// Instruments
+
+Breadcrumbs::for('dashboard.instruments.index', function (Crumbs $crumbs) {
+    $crumbs->parent('dashboard.home');
+    $crumbs->push(trans('menu.instruments'), route('dashboard.instruments.index'));
+});
+
+Breadcrumbs::for('dashboard.instruments.create', function (Crumbs $crumbs) {
+    $crumbs->parent('dashboard.instruments.index');
+    $crumbs->push(trans('adminlte.create'), route('dashboard.instruments.create'));
+});
+
+Breadcrumbs::for('dashboard.instruments.show', function (Crumbs $crumbs, Instrument $instrument) {
+    $crumbs->parent('dashboard.instruments.index');
+    $crumbs->push($instrument->name, route('dashboard.instruments.show', $instrument));
+});
+
+Breadcrumbs::for('dashboard.instruments.edit', function (Crumbs $crumbs, Instrument $instrument) {
+    $crumbs->parent('dashboard.instruments.show', $instrument);
+    $crumbs->push(trans('adminlte.edit'), route('dashboard.instruments.edit', $instrument));
 });

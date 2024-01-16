@@ -65,6 +65,8 @@ return [
     'male' => 'Erkak',
     'female' => 'Ayol',
     'type' => 'Turi',
+    'quantity' => 'Miqdori',
+    'weight' => 'Og`irligi',
     'employees' => 'Xodimlar',
     'created_by' => 'tomonidan yaratilgan',
     'updated_by' => 'tomonidan yangilangan',
@@ -123,5 +125,10 @@ return [
         'employee_not_added' => 'Xodim qo`shilmadi.',
         'employee_removed' => 'Xodim muvaffaqiyatli olib tashlandi.',
         'employee_not_removed' => 'Xodim olib tashlanmadi.',
+    ],
+
+    'instrument' => [
+        'add' => 'Asbob-uskuna qo`shmoq',
+        'name' => 'Asbob-uskuna',
     ],
 ];

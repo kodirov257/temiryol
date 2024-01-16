@@ -29,6 +29,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Organization $organization
  * @property Department $parent
  * @property Department[] $children
+ * @property Instrument[] $instruments
  * @property User $createdBy
  * @property User $updatedBy
  *
@@ -108,6 +109,14 @@ class Department extends BaseModel
     public function children(): HasMany|array
     {
         return $this->hasMany(self::class, 'parent_id', 'id');
+    }
+
+    /**
+     * @return HasMany|Instrument[]
+     */
+    public function instruments(): HasMany|array
+    {
+        return $this->hasMany(Instrument::class, 'department_id', 'id');
     }
 
     public function createdBy(): BelongsTo|User

@@ -31,7 +31,7 @@ class UpdateRequest extends FormRequest
             'name_uz_cy' => 'required|string|max:255|unique:departments,name_uz_cy,' . $this->department->id . ',id,parent_id,' . ($this->department->parent_id ?: 'NULL'),
             'name_ru' => 'required|string|max:255|unique:departments,name_ru,' . $this->department->id . ',id,parent_id,' . ($this->department->parent_id ?: 'NULL'),
             'name_en' => 'required|string|max:255|unique:departments,name_en,' . $this->department->id . ',id,parent_id,' . ($this->department->parent_id ?: 'NULL'),
-            'organization_id' => 'required|int|min:1|exists:departments,id',
+            'organization_id' => 'required|int|min:1|exists:organizations,id',
             'parent_id' => 'nullable|int|exists:departments,id',
             'slug' => 'nullable|string|max:255|unique:departments,slug,' . $this->department->id . ',id,parent_id,' . ($this->department->parent_id ?: 'NULL'),
         ];

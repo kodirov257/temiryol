@@ -28,9 +28,9 @@ class DepartmentService
 
     public function update(int $id, UpdateRequest $request): void
     {
-        $organization = Department::findOrFail($id);
+        $department = Department::findOrFail($id);
 
-        $organization->update([
+        $department->update([
             'name_uz' => $request->name_uz,
             'name_uz_cy' => $request->name_uz_cy,
             'name_ru' => $request->name_ru,

@@ -16,6 +16,11 @@ class LanguageHelper
         return self::getAttribute($className, 'name', $lang) ?? '';
     }
 
+    public static function getDescription($className, $lang = null): string
+    {
+        return self::getAttribute($className, 'description', $lang) ?? '';
+    }
+
     public static function getAttribute($className, string $attributeName, $lang = null): ?string
     {
         if ($lang) {

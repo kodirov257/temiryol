@@ -4,12 +4,13 @@ namespace App\Helpers;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
-use Intervention\Image\Constraint;
-use Intervention\Image\Facades\Image;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\ImageManager;
 
 class ImageHelper
 {
     public const FOLDER_PROFILES = 'profiles';
+    public const FOLDER_INSTRUMENTS = 'instruments';
     public const TYPE_THUMBNAIL = 'thumbs';
     public const TYPE_CUSTOM = 'custom';
     public const TYPE_ORIGINAL = 'original';
@@ -31,10 +32,10 @@ class ImageHelper
 
         self::makeDirectory($destinationPath);
 
-        $resizeImage = Image::make($image->getRealPath());
-        $resizeImage->resize($width, $height, function(Constraint $constraint) {
-            $constraint->aspectRatio();
-        })->save($destinationPath . '/' . $imageName);
+        $manager = new ImageManager(new Driver());
+
+        $resizeImage = $manager->read($image->getRealPath());
+        $resizeImage->scale($width, $height)()->save($destinationPath . '/' . $imageName);
     }
 
     public static function saveCustom(int $id, string $folderName, UploadedFile $image, string $imageName, int $width, int $height): void
@@ -43,10 +44,10 @@ class ImageHelper
 
         self::makeDirectory($destinationPath);
 
-        $resizeImage = Image::make($image->getRealPath());
-        $resizeImage->resize($width, $height, function(Constraint $constraint) {
-            $constraint->aspectRatio();
-        })->save($destinationPath . '/' . $imageName);
+        $manager = new ImageManager(new Driver());
+
+        $resizeImage = $manager->read($image->getRealPath());
+        $resizeImage->scale($width, $height)()->save($destinationPath . '/' . $imageName);
     }
 
     public static function saveOriginal(int $id, string $folderName, UploadedFile $image, string $imageName): void

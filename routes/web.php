@@ -65,6 +65,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::post('employees/add', 'DepartmentController@addWorker')->name('employees.add');
             Route::delete('employees/{employee}/delete', 'DepartmentController@removeWorker')->name('employees.remove');
         });
+        Route::resource('instruments', 'InstrumentController');
+        Route::group(['prefix' => 'instruments/{instrument}', 'as' => 'instruments.'], function () {
+            Route::post('remove-photo', 'InstrumentController@removePhoto')->name('remove-photo');
+        });
 
         Route::post('/darkmode/toggle', [DarkModeController::class, 'toggle'])
             ->name('darkmode.toggle');

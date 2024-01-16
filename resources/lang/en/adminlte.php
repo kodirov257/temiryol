@@ -65,6 +65,8 @@ return [
     'male' => 'Male',
     'female' => 'Female',
     'type' => 'Type',
+    'quantity' => 'Quantity',
+    'weight' => 'Weight',
     'employees' => 'Employees',
     'created_by' => 'Created by',
     'updated_by' => 'Updated by',
@@ -124,5 +126,10 @@ return [
         'employee_not_added' => 'Employee is not added.',
         'employee_removed' => 'Employee is removed successfully.',
         'employee_not_removed' => 'Employee is not removed.',
+    ],
+
+    'instrument' => [
+        'add' => 'Add Instrument',
+        'name' => 'Instrument',
     ],
 ];
