@@ -106,40 +106,11 @@
                     </div>
                 </div>
 
-                @if(!request()->get('department_id'))
-                    <div class="form-group">
-                        {!! Html::label(__('adminlte.department.name'), 'department_id')->class('col-form-label') !!}
-                        {!! Html::select('department_id', $defaultDepartment, old('department_id'))->required()
-                                ->id('department_id')->class('form-control' . ($errors->has('department_id') ? ' is-invalid' : '')) !!}
-                        @if($errors->has('department_id'))
-                            <span
-                                class="invalid-feedback"><strong>{{ $errors->first('department_id') }}</strong></span>
-                        @endif
-                    </div>
-                @else
-                    {!! Html::hidden('department_id', request()->get('department_id')) !!}
-                @endif
                 <div class="form-group">
                     {!! Html::label('Slug', 'slug')->class('col-form-label') !!}
                     {!! Html::text('slug', old('slug', $instrument->slug ?? null))->class('form-control' . ($errors->has('slug') ? ' is-invalid' : '')) !!}
                     @if ($errors->has('slug'))
                         <span class="invalid-feedback"><strong>{{ $errors->first('slug') }}</strong></span>
-                    @endif
-                </div>
-                <div class="form-group">
-                    {!! Html::label(__('adminlte.quantity'), 'quantity')->class('col-form-label') !!}
-                    {!! Html::number('quantity', old('quantity', $instrument->quantity ?? null))
-                        ->class('form-control' . ($errors->has('quantity') ? ' is-invalid' : ''))->required() !!}
-                    @if ($errors->has('quantity'))
-                        <span class="invalid-feedback"><strong>{{ $errors->first('quantity') }}</strong></span>
-                    @endif
-                </div>
-                <div class="form-group">
-                    {!! Html::label(__('adminlte.weight'), 'weight')->class('col-form-label') !!}
-                    {!! Html::number('weight', old('weight', $instrument->weight ?? null))->attribute('step', '0.01')
-                        ->class('form-control' . ($errors->has('weight') ? ' is-invalid' : ''))->required() !!}
-                    @if ($errors->has('weight'))
-                        <span class="invalid-feedback"><strong>{{ $errors->first('weight') }}</strong></span>
                     @endif
                 </div>
             </div>

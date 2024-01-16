@@ -1,6 +1,6 @@
 <x-admin-page-layout>
     @section('content')
-        <form action="{{ route('dashboard.instruments.update', $instrument) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('dashboard.instrument-types.update', $instrument) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 

@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use App\Helpers\LanguageHelper;
+use App\Models\Instrument\DepartmentInstrumentType;
+use App\Models\Instrument\InstrumentType;
 use App\Models\User\User;
 use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Eloquent;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -29,7 +30,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Organization $organization
  * @property Department $parent
  * @property Department[] $children
- * @property Instrument[] $instruments
+ * @property DepartmentInstrumentType[] $departmentInstrumentTypes
+ * @property InstrumentType[] $instrumentTypes
  * @property User $createdBy
  * @property User $updatedBy
  *
@@ -58,6 +60,11 @@ class Department extends BaseModel
                 'source' => 'name_en',
             ],
         ];
+    }
+
+    public function instrumentTypesList(): array
+    {
+        return $this->departmentInstrumentTypes()->pluck('type_id')->toArray();
     }
 
     public function getFullName(): string
@@ -112,11 +119,19 @@ class Department extends BaseModel
     }
 
     /**
-     * @return HasMany|Instrument[]
+     * @return HasMany|DepartmentInstrumentType[]
      */
-    public function instruments(): HasMany|array
+    public function departmentInstrumentTypes(): HasMany|array
     {
-        return $this->hasMany(Instrument::class, 'department_id', 'id');
+        return $this->hasMany(DepartmentInstrumentType::class, 'department_id', 'id');
+    }
+
+    /**
+     * @return BelongsToMany|InstrumentType[]
+     */
+    public function instrumentTypes(): BelongsToMany|array
+    {
+        return $this->belongsToMany(InstrumentType::class, 'department_instrument_type', 'department_id', 'type_id');
     }
 
     public function createdBy(): BelongsTo|User

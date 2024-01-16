@@ -256,7 +256,7 @@ return [
     */
 
     'use_route_url' => true,
-    'dashboard_url' => false,
+    'dashboard_url' => 'dashboard.home',
     'logout_url' => 'logout',
     'login_url' => 'signin',
     'register_url' => 'register.show',
@@ -347,6 +347,12 @@ return [
             'url'  => '/dashboard/departments',
             'icon' => 'fas fa-fw fa-file',
             'can'  => 'manage-departments',
+        ],
+        [
+            'text' => 'instrument_types',
+            'url'  => '/dashboard/instrument-types',
+            'icon' => 'fas fa-fw fa-file',
+            'can'  => 'manage-instrument-types',
         ],
 //        [
 //            'text' => 'change_password',

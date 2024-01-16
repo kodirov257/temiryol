@@ -1,6 +1,6 @@
 <x-admin-page-layout>
     @section('content')
-        <form action="{{ route('dashboard.instruments.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('dashboard.instrument-types.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             @include('partials.admin._nav')

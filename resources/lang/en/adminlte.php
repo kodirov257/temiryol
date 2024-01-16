@@ -128,6 +128,11 @@ return [
         'employee_not_removed' => 'Employee is not removed.',
     ],
 
+    'instrument_type' => [
+        'add' => 'Add Instrument Type',
+        'name' => 'Instrument Type',
+    ],
+
     'instrument' => [
         'add' => 'Add Instrument',
         'name' => 'Instrument',

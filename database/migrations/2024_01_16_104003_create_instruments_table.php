@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('instruments', function (Blueprint $table) {
+        Schema::create('instrument_types', function (Blueprint $table) {
             $table->id();
             $table->string('name_uz');
             $table->string('name_uz_cy');
@@ -21,19 +21,14 @@ return new class extends Migration
             $table->text('description_uz_cy');
             $table->text('description_ru');
             $table->text('description_en');
-            $table->integer('quantity')->default(0);
-            $table->float('weight')->default(0);
             $table->string('photo')->nullable();
-            $table->unsignedInteger('department_id');
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by');
             $table->timestamps();
         });
 
-        Schema::table('instruments', function (Blueprint $table) {
-            $table->unique(['slug', 'department_id']);
-            $table->foreign('department_id')->references('id')->on('departments')->onDelete('restrict');
+        Schema::table('instrument_types', function (Blueprint $table) {
             $table->foreign('created_by')->references('id')->on('users')->onDelete('restrict');
             $table->foreign('updated_by')->references('id')->on('users')->onDelete('restrict');
         });
@@ -44,6 +39,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('instruments');
+        Schema::dropIfExists('instrument_types');
     }
 };

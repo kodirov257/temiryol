@@ -1,15 +1,18 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Instrument;
 
 use App\Helpers\ImageHelper;
 use App\Helpers\LanguageHelper;
+use App\Models\BaseModel;
+use App\Models\Department;
 use App\Models\User\User;
 use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Eloquent;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
@@ -21,8 +24,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $description_uz_cy
  * @property string $description_ru
  * @property string $description_en
- * @property int $quantity
- * @property float $weight
  * @property string $photo
  * @property int $department_id
  * @property string $slug
@@ -31,7 +32,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property Carbon $created_at
  * @property Carbon $updated_at
  *
- * @property Department $department
+ * @property DepartmentInstrumentType[] $instrumentDepartments
+ * @property Department[] $departments
  * @property User $createdBy
  * @property User $updatedBy
  *
@@ -42,17 +44,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *
  * @mixin Eloquent
  */
-class Instrument extends BaseModel
+class InstrumentType extends BaseModel
 {
     use /*HasFactory, */Sluggable;
 
-    protected $table = 'instruments';
+    protected $table = 'instrument_types';
 
     public int $depth;
 
     protected $fillable = [
         'name_uz', 'name_uz_cy', 'name_ru', 'name_en', 'description_uz', 'description_uz_cy', 'description_ru',
-        'description_en', 'quantity', 'weight', 'department_id', 'slug',
+        'description_en', 'department_id', 'slug',
     ];
 
     public function sluggable(): array
@@ -92,9 +94,20 @@ class Instrument extends BaseModel
 
     ########################################### Relations
 
-    public function department(): BelongsTo|Region
+    /**
+     * @return BelongsToMany|DepartmentInstrumentType[]
+     */
+    public function instrumentDepartments(): HasMany|array
     {
-        return $this->belongsTo(Department::class, 'department_id', 'id');
+        return $this->hasMany(DepartmentInstrumentType::class, 'type_id', 'id');
+    }
+
+    /**
+     * @return BelongsToMany|Department[]
+     */
+    public function departments(): BelongsToMany|array
+    {
+        return $this->belongsToMany(Department::class, 'department_instrument_type', 'type_id', 'department_id');
     }
 
     public function createdBy(): BelongsTo|User

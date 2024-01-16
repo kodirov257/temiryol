@@ -22,5 +22,6 @@ return [
     'regions'                       => 'Ҳудудлар',
     'organizations'                 => 'Ташкилотлар',
     'departments'                   => 'Бўлимлар',
+    'instrument_types'              => 'Асбоб-ускуналар турлари',
     'instruments'                   => 'Асбоб-ускуналар',
 ];

@@ -1,25 +1,25 @@
 <?php
 
-namespace App\Services\Manage;
+namespace App\Services\Manage\Instrument;
 
 use App\Helpers\ImageHelper;
-use App\Http\Requests\Admin\Instruments\CreateRequest;
-use App\Http\Requests\Admin\Instruments\UpdateRequest;
-use App\Models\Instrument;
+use App\Http\Requests\Admin\Instrument\InstrumentTypes\CreateRequest;
+use App\Http\Requests\Admin\Instrument\InstrumentTypes\UpdateRequest;
+use App\Models\Instrument\InstrumentType;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
-class InstrumentService
+class InstrumentTypeService
 {
     private ?int $nextId = null;
 
     /**
      * @throws \Throwable
      */
-    public function create(CreateRequest $request): Instrument
+    public function create(CreateRequest $request): InstrumentType
     {
-        $instrument =  Instrument::make([
+        $instrument =  InstrumentType::make([
             'name_uz' => $request->name_uz,
             'name_uz_cy' => $request->name_uz_cy,
             'name_ru' => $request->name_ru,
@@ -28,9 +28,6 @@ class InstrumentService
             'description_uz_cy' => $request->description_uz_cy,
             'description_ru' => $request->description_ru,
             'description_en' => $request->description_en,
-            'quantity' => $request->quantity,
-            'weight' => $request->weight,
-            'department_id' => $parentDepartment->department_id ?? $request->department_id,
             'slug' => $request->slug,
         ]);
 
@@ -50,7 +47,7 @@ class InstrumentService
 
     public function update(int $id, UpdateRequest $request): void
     {
-        $instrument = Instrument::findOrFail($id);
+        $instrument = InstrumentType::findOrFail($id);
 
         $photoName = $request->photo ? ImageHelper::getRandomName($request->photo) : null;
 
@@ -63,10 +60,7 @@ class InstrumentService
             'description_uz_cy' => $request->description_uz_cy,
             'description_ru' => $request->description_ru,
             'description_en' => $request->description_en,
-            'quantity' => $request->quantity,
-            'weight' => $request->weight,
             'photo' => $photoName ?? $instrument->photo,
-            'department_id' => $parentDepartment->department_id ?? $request->department_id,
             'slug' => $request->slug,
         ]);
 
@@ -79,7 +73,7 @@ class InstrumentService
     public function getNextId(): int
     {
         if (!$this->nextId) {
-            $nextId = DB::select("select nextval('instruments_id_seq')");
+            $nextId = DB::select("select nextval('instrument_types_id_seq')");
             return $this->nextId = (int)$nextId['0']->nextval;
         }
         return $this->nextId;
@@ -87,7 +81,7 @@ class InstrumentService
 
     public function removePhoto(int $id): bool
     {
-        $instrument = Instrument::findOrFail($id);
+        $instrument = InstrumentType::findOrFail($id);
         return Storage::disk('public')->deleteDirectory('/files/' . ImageHelper::FOLDER_INSTRUMENTS . '/' . $instrument->id) && $instrument->update(['file' => null]);
     }
 

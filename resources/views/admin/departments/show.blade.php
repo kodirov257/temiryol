@@ -7,8 +7,6 @@
                class="btn btn-success mr-1">{{ __('adminlte.department.add') }}</a>
             <a href="{{ route('dashboard.departments.employees.add.form', $department) }}"
                class="btn btn-dark mr-1">{{ __('adminlte.department.add_employee') }}</a>
-            <a href="{{ route('dashboard.instruments.create', ['department_id' => $department]) }}"
-               class="btn btn-warning mr-1">{{ __('adminlte.instrument.add') }}</a>
             <form method="POST" action="{{ route('dashboard.departments.destroy', $department) }}" class="mr-1">
                 @csrf
                 @method('DELETE')
@@ -182,10 +180,8 @@
         </div>
 
         <div class="card" id="instruments">
-            <div class="card-header card-green with-border">{{ __('menu.instruments') }}</div>
+            <div class="card-header card-green with-border">{{ __('menu.instrument_types') }}</div>
             <div class="card-body">
-                <p><a href="{{ route('dashboard.instruments.create', ['department_id' => $department]) }}"
-                      class="btn btn-success">{{ __('adminlte.instrument.add') }}</a></p>
 
                 <table class="table table-bordered table-striped">
                     <thead>
@@ -195,28 +191,31 @@
                         <td>Номи</td>
                         <td>Название</td>
                         <td>{{ __('adminlte.quantity') }}</td>
-                        <td>{{ __('adminlte.weight') }}</td>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ($department->instruments as $instrument)
+                    @foreach ($department->departmentInstrumentTypes()->with('instrument')->get() as $instrumentType)
+                        <?php /* @var $instrumentType \App\Models\Instrument\DepartmentInstrumentType */ ?>
+                        @php($type = $instrumentType->type)
+
                         <tr>
                             <td>
-                                @if ($instrument->photo)
-                                    <a href="{{ $instrument->photoOriginal }}" target="_blank"><img src="{{ $instrument->photoThumbnail }}"></a>
+                                @if ($type->photo)
+                                    <a href="{{ $type->photoOriginal }}" target="_blank">
+                                        <img src="{{ $type->photoThumbnail }}" alt="{{ $type->name }}">
+                                    </a>
                                 @endif
                             </td>
                             <td>
-                                <a href="{{ route('dashboard.instruments.show', $instrument) }}">{{ $instrument->name_uz }}</a>
+                                <a href="{{ route('dashboard.instrument-types.show', $instrumentType) }}">{{ $type->name_uz }}</a>
                             </td>
                             <td>
-                                <a href="{{ route('dashboard.instruments.show', $instrument) }}">{{ $instrument->name_uz_cy }}</a>
+                                <a href="{{ route('dashboard.instrument-types.show', $instrumentType) }}">{{ $type->name_uz_cy }}</a>
                             </td>
                             <td>
-                                <a href="{{ route('dashboard.instruments.show', $instrument) }}">{{ $instrument->name_ru }}</a>
+                                <a href="{{ route('dashboard.instrument-types.show', $instrumentType) }}">{{ $type->name_ru }}</a>
                             </td>
-                            <td>{{ $instrument->quantity }}</td>
-                            <td>{{ $instrument->weight }}</td>
+                            <td>{{ $instrumentType->quantity }}</td>
                         </tr>
                     @endforeach
                     </tbody>

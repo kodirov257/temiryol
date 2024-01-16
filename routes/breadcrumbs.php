@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\Department;
-use App\Models\Instrument;
+use App\Models\Instrument\InstrumentType;
 use App\Models\Organization;
 use App\Models\Region;
 use App\Models\User\User;
@@ -132,22 +132,22 @@ Breadcrumbs::for('dashboard.departments.employees.add.form', function (Crumbs $c
 
 // Instruments
 
-Breadcrumbs::for('dashboard.instruments.index', function (Crumbs $crumbs) {
+Breadcrumbs::for('dashboard.instrument-types.index', function (Crumbs $crumbs) {
     $crumbs->parent('dashboard.home');
-    $crumbs->push(trans('menu.instruments'), route('dashboard.instruments.index'));
+    $crumbs->push(trans('menu.instruments'), route('dashboard.instrument-types.index'));
 });
 
-Breadcrumbs::for('dashboard.instruments.create', function (Crumbs $crumbs) {
-    $crumbs->parent('dashboard.instruments.index');
-    $crumbs->push(trans('adminlte.create'), route('dashboard.instruments.create'));
+Breadcrumbs::for('dashboard.instrument-types.create', function (Crumbs $crumbs) {
+    $crumbs->parent('dashboard.instrument-types.index');
+    $crumbs->push(trans('adminlte.create'), route('dashboard.instrument-types.create'));
 });
 
-Breadcrumbs::for('dashboard.instruments.show', function (Crumbs $crumbs, Instrument $instrument) {
-    $crumbs->parent('dashboard.instruments.index');
-    $crumbs->push($instrument->name, route('dashboard.instruments.show', $instrument));
+Breadcrumbs::for('dashboard.instrument-types.show', function (Crumbs $crumbs, InstrumentType $instrument) {
+    $crumbs->parent('dashboard.instrument-types.index');
+    $crumbs->push($instrument->name, route('dashboard.instrument-types.show', $instrument));
 });
 
-Breadcrumbs::for('dashboard.instruments.edit', function (Crumbs $crumbs, Instrument $instrument) {
-    $crumbs->parent('dashboard.instruments.show', $instrument);
-    $crumbs->push(trans('adminlte.edit'), route('dashboard.instruments.edit', $instrument));
+Breadcrumbs::for('dashboard.instrument-types.edit', function (Crumbs $crumbs, InstrumentType $instrument) {
+    $crumbs->parent('dashboard.instrument-types.show', $instrument);
+    $crumbs->push(trans('adminlte.edit'), route('dashboard.instrument-types.edit', $instrument));
 });

@@ -35,7 +35,7 @@ class ImageHelper
         $manager = new ImageManager(new Driver());
 
         $resizeImage = $manager->read($image->getRealPath());
-        $resizeImage->scale($width, $height)()->save($destinationPath . '/' . $imageName);
+        $resizeImage->scale($width, $height)->save($destinationPath . '/' . $imageName);
     }
 
     public static function saveCustom(int $id, string $folderName, UploadedFile $image, string $imageName, int $width, int $height): void
@@ -47,7 +47,7 @@ class ImageHelper
         $manager = new ImageManager(new Driver());
 
         $resizeImage = $manager->read($image->getRealPath());
-        $resizeImage->scale($width, $height)()->save($destinationPath . '/' . $imageName);
+        $resizeImage->scale($width, $height)->save($destinationPath . '/' . $imageName);
     }
 
     public static function saveOriginal(int $id, string $folderName, UploadedFile $image, string $imageName): void

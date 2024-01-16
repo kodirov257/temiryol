@@ -127,6 +127,11 @@ return [
         'employee_not_removed' => 'Xodim olib tashlanmadi.',
     ],
 
+    'instrument_type' => [
+        'add' => 'Asbob-uskuna turini qo`shmoq',
+        'name' => 'Asbob-uskuna turi',
+    ],
+
     'instrument' => [
         'add' => 'Asbob-uskuna qo`shmoq',
         'name' => 'Asbob-uskuna',
