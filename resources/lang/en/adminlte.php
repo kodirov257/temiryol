@@ -136,5 +136,13 @@ return [
     'instrument' => [
         'add' => 'Add Instrument',
         'name' => 'Instrument',
+        'unavailable' => 'Unavailable',
+        'broken' => 'Broken',
+        'available' => 'Available',
+        'in_use' => 'In Use',
+        'not_returned' => 'Not Returned',
+        'repaired' => 'Repaired',
+        'serial' => 'Serial Number',
+        'notes' => 'Notes',
     ],
 ];

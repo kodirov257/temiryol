@@ -59,16 +59,26 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
         Route::resource('regions', 'RegionController');
         Route::resource('organizations', 'OrganizationController');
-        Route::resource('departments', 'DepartmentController');
-        Route::group(['prefix' => 'departments/{department}', 'as' => 'departments.'], function () {
+        Route::resource('departments', 'Department\DepartmentController');
+        Route::group(['prefix' => 'departments/{department}', 'namespace' => 'Department', 'as' => 'departments.'], function () {
             Route::get('employees/add', 'DepartmentController@addWorkerForm')->name('employees.add.form');
             Route::post('employees/add', 'DepartmentController@addWorker')->name('employees.add');
             Route::delete('employees/{employee}/delete', 'DepartmentController@removeWorker')->name('employees.remove');
+
+            Route::get('instruments/create', 'InstrumentController@create')->name('instruments.create');
+            Route::post('instruments/store', 'InstrumentController@store')->name('instruments.store');
         });
         Route::resource('instrument-types', 'Instrument\InstrumentTypeController');
-        Route::group(['prefix' => 'instrument-types/{instrument}', 'namespace' => 'Instrument', 'as' => 'instrument-types.'], function () {
+        Route::group(['prefix' => 'instrument-types/{instrumentType}', 'namespace' => 'Instrument', 'as' => 'instrument-types.'], function () {
             Route::post('remove-photo', 'InstrumentTypeController@removePhoto')->name('remove-photo');
         });
+        Route::group(['prefix' => 'department-instrument-types/{departmentInstrumentType}', 'namespace' => 'Instrument', 'as' => 'department-instrument-types.'], function () {
+            Route::resource('instruments', 'InstrumentController');
+            Route::group(['prefix' => 'instruments/{instrument}', 'as' => 'instruments.'], function () {
+                Route::get('destroy', 'InstrumentController@destroyForm')->name('destroy.form');
+            });
+        });
+        Route::get('instruments', 'InstrumentController@index')->name('instruments.index');
 
         Route::post('/darkmode/toggle', [DarkModeController::class, 'toggle'])
             ->name('darkmode.toggle');

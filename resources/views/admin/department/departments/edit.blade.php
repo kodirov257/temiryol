@@ -4,7 +4,7 @@
             @csrf
             @method('PUT')
 
-            @include('admin.departments._form', ['parent' => null])
+            @include('admin.department.departments._form', ['parent' => null])
         </form>
     @endsection
 </x-admin-page-layout>

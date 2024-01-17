@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('departments', function (Blueprint $table) {
+        Schema::create('department_departments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name_uz');
             $table->string('name_uz_cy');
@@ -27,17 +27,17 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::table('departments', function (Blueprint $table) {
+        Schema::table('department_departments', function (Blueprint $table) {
             $table->unique(['slug', 'organization_id', 'parent_id']);
             $table->foreign('organization_id')->references('id')->on('organizations')->onDelete('restrict');
-            $table->foreign('parent_id')->references('id')->on('departments')->onDelete('cascade');
+            $table->foreign('parent_id')->references('id')->on('department_departments')->onDelete('cascade');
             $table->foreign('created_by')->references('id')->on('users')->onDelete('restrict');
             $table->foreign('updated_by')->references('id')->on('users')->onDelete('restrict');
         });
 
         $organizationId = DB::table('organizations')->where('type', Organization::SUBSIDIARY)->where('slug', 'andijan-mechanical-factory')->first()->id;
 
-        DB::table('departments')->insert([
+        DB::table('department_departments')->insert([
             'name_uz'           => 'Asosiy omborxona',
             'name_uz_cy'        => 'Асосий омборхона',
             'name_ru'           => 'Центральный склад',
@@ -51,13 +51,13 @@ return new class extends Migration
             'updated_at'        => Carbon::now(),
         ]);
 
-        DB::table('departments')->insert([
+        DB::table('department_departments')->insert([
             'name_uz'           => 'BIX',
             'name_uz_cy'        => 'БИХ',
             'name_ru'           => 'БИХ',
             'name_en'           => 'BIH',
             'organization_id'   => $organizationId,
-            'parent_id'         => DB::table('departments')->where('slug', 'central-warehouse')->first()->id,
+            'parent_id'         => DB::table('department_departments')->where('slug', 'central-warehouse')->first()->id,
             'slug'              => 'bih',
             'created_by'        => 1,
             'updated_by'        => 1,
@@ -65,9 +65,9 @@ return new class extends Migration
             'updated_at'        => Carbon::now(),
         ]);
 
-        $bihId = DB::table('departments')->where('slug', 'bih')->first()->id;
+        $bihId = DB::table('department_departments')->where('slug', 'bih')->first()->id;
 
-        DB::table('departments')->insert([
+        DB::table('department_departments')->insert([
             'name_uz'           => 'Omborxona 1',
             'name_uz_cy'        => 'Омборхона 1',
             'name_ru'           => 'Склад 1',
@@ -81,7 +81,7 @@ return new class extends Migration
             'updated_at'        => Carbon::now(),
         ]);
 
-        DB::table('departments')->insert([
+        DB::table('department_departments')->insert([
             'name_uz'           => 'Omborxona 2',
             'name_uz_cy'        => 'Омборхона 2',
             'name_ru'           => 'Склад 2',
@@ -95,7 +95,7 @@ return new class extends Migration
             'updated_at'        => Carbon::now(),
         ]);
 
-        DB::table('departments')->insert([
+        DB::table('department_departments')->insert([
             'name_uz'           => 'Omborxona 3',
             'name_uz_cy'        => 'Омборхона 3',
             'name_ru'           => 'Склад 3',
@@ -109,7 +109,7 @@ return new class extends Migration
             'updated_at'        => Carbon::now(),
         ]);
 
-        DB::table('departments')->insert([
+        DB::table('department_departments')->insert([
             'name_uz'           => 'Omborxona 4',
             'name_uz_cy'        => 'Омборхона 4',
             'name_ru'           => 'Склад 4',
@@ -129,6 +129,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('departments');
+        Schema::dropIfExists('department_departments');
     }
 };

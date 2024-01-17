@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Department;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Departments\CreateRequest;
 use App\Http\Requests\Admin\Departments\UpdateRequest;
 use App\Models\Department;
-use App\Models\Organization;
 use App\Models\User\User;
-use App\Services\Manage\DepartmentService;
+use App\Services\Manage\Department\DepartmentService;
 use App\Services\Manage\OrganizationService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class DepartmentController extends Controller
@@ -52,7 +52,7 @@ class DepartmentController extends Controller
 
         $organizations = OrganizationService::getOrganizationList();
 
-        return view('admin.departments.index', compact('departments', 'organizations'));
+        return view('admin.department.departments.index', compact('departments', 'organizations'));
     }
 
     public function create(Request $request): View
@@ -65,7 +65,7 @@ class DepartmentController extends Controller
             $parent = Department::findOrFail($request->get('parent'));
         }
 
-        return view('admin.departments.create', compact('parent', 'organizationList'));
+        return view('admin.department.departments.create', compact('parent', 'organizationList'));
     }
 
     public function store(CreateRequest $request): RedirectResponse
@@ -87,7 +87,7 @@ class DepartmentController extends Controller
         $employees = User::leftJoin('profiles as p', 'users.id', '=', 'p.user_id')
             ->whereIn('p.department_id', $descendantIds)->get();
 
-        return view('admin.departments.show', compact('department', 'childDepartments', 'employees'));
+        return view('admin.department.departments.show', compact('department', 'childDepartments', 'employees'));
     }
 
     public function edit(Department $department): View
@@ -95,7 +95,7 @@ class DepartmentController extends Controller
         $organizationList = OrganizationService::getOrganizationList();
         $departmentList = DepartmentService::getDepartmentList($department->id);
 
-        return view('admin.departments.edit', compact('department', 'organizationList', 'departmentList'));
+        return view('admin.department.departments.edit', compact('department', 'organizationList', 'departmentList'));
     }
 
     public function update(UpdateRequest $request, Department $department): RedirectResponse
@@ -111,7 +111,7 @@ class DepartmentController extends Controller
 
     public function addWorkerForm(Department $department): View
     {
-        return view('admin.departments.add_worker', compact('department'));
+        return view('admin.department.departments.add_worker', compact('department'));
     }
 
     public function addWorker(Request $request, Department $department): RedirectResponse
@@ -126,6 +126,8 @@ class DepartmentController extends Controller
             }
             session()->flash('message', __('adminlte.department.employee_added'));
             return redirect()->route('dashboard.departments.show', $department);
+        } catch (ValidationException $e) {
+            return redirect()->back($e->status)->withInput($request->all())->withErrors($e->errors());
         } catch (\Exception|\Throwable $e) {
             return back()->with('error', $e->getMessage());
         }

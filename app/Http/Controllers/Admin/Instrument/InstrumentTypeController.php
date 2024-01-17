@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers\Admin\Instrument;
 
-use App\Helpers\LanguageHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Instrument\InstrumentTypes\CreateRequest;
 use App\Http\Requests\Admin\Instrument\InstrumentTypes\UpdateRequest;
-use App\Models\Department;
 use App\Models\Instrument\InstrumentType;
-use App\Services\Manage\DepartmentService;
 use App\Services\Manage\Instrument\InstrumentTypeService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
@@ -28,7 +25,7 @@ class InstrumentTypeController extends Controller
 
     public function index(Request $request): View
     {
-        $query = InstrumentType::with(['department'])->orderByDesc('updated_at');
+        $query = InstrumentType::orderByDesc('updated_at');
 
         if (!empty($value = $request->get('name'))) {
             $query->where(function (Builder $query) use ($value) {
@@ -39,38 +36,23 @@ class InstrumentTypeController extends Controller
             });
         }
 
-        $defaultDepartment = [];
-        if (!empty($value = $request->get('department_id'))) {
-            $department = Department::findOrFail($value);
-            $departmentIds = [];
-            DepartmentService::getDescendantIds($department, $departmentIds);
-            $query->whereIn('department_id', $departmentIds);
+        $instrumentTypes = $query->paginate(20)
+            ->appends('name', $request->get('name'));
 
-            $defaultDepartment = Department::where('id', $value)->get()->pluck('name_' . LanguageHelper::getCurrentLanguagePrefix(), 'id')->toArray();
-        }
-
-        $instruments = $query->paginate(20)
-            ->appends('name', $request->get('name'))
-            ->appends('department_id', $request->get('department_id'));
-
-        return view('admin.instruments.index', compact('instruments', 'defaultDepartment'));
+        return view('admin.instrument.instrument-types.index', compact('instrumentTypes'));
     }
 
-    public function create(Request $request): View
+    public function create(): View
     {
-        $defaultDepartment = $request->has('department_id') ? [] :
-            Department::where('id', $request->get('department_id'))->get()
-                ->pluck('name_' . LanguageHelper::getCurrentLanguagePrefix(), 'id')->toArray();
-
-        return view('admin.instruments.create', compact('defaultDepartment'));
+        return view('admin.instrument.instrument-types.create');
     }
 
     public function store(CreateRequest $request): RedirectResponse
     {
         try {
-            $department = $this->service->create($request);
+            $instrument = $this->service->create($request);
             session()->flash('message', 'запись обновлён ');
-            return redirect()->route('dashboard.instrument-types.show', $department);
+            return redirect()->route('dashboard.instrument-types.show', $instrument);
         } catch (\Exception|\Throwable $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -78,21 +60,20 @@ class InstrumentTypeController extends Controller
 
     public function show(InstrumentType $instrumentType): View
     {
-        return view('admin.instruments.show', compact('instrumentType'));
+        return view('admin.instrument.instrument-types.show', compact('instrumentType'));
     }
 
-    public function edit(InstrumentType $instrument): View
+    public function edit(InstrumentType $instrumentType): View
     {
-        $defaultDepartment = $instrument->department()->get()->pluck('name_' . LanguageHelper::getCurrentLanguagePrefix(), 'id')->toArray();
-        return view('admin.instruments.edit', compact('instrument', 'defaultDepartment'));
+        return view('admin.instrument.instrument-types.edit', compact('instrumentType'));
     }
 
-    public function update(UpdateRequest $request, InstrumentType $instrument): RedirectResponse
+    public function update(UpdateRequest $request, InstrumentType $instrumentType): RedirectResponse
     {
         try {
-            $this->service->update($instrument->id, $request);
+            $this->service->update($instrumentType->id, $request);
             session()->flash('message', 'запись обновлён ');
-            return redirect()->route('dashboard.instrument-types.show', $instrument);
+            return redirect()->route('dashboard.instrument-types.show', $instrumentType);
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -106,14 +87,14 @@ class InstrumentTypeController extends Controller
         return response()->json('The photo is not deleted!', 400);
     }
 
-    public function destroy(InstrumentType $instrument): RedirectResponse
+    public function destroy(InstrumentType $instrumentType): RedirectResponse
     {
-        if ($instrument->created_by !== Auth::user()->id && !Auth::user()->isAdmin()) {
+        if ($instrumentType->created_by !== Auth::user()->id && !Auth::user()->isAdmin()) {
             return redirect()->route('dashboard.instrument-types.index');
         }
 
         try {
-            $instrument->delete();
+            $instrumentType->delete();
 
             session()->flash('message', 'запись обновлён ');
 

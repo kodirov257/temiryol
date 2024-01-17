@@ -18,7 +18,7 @@ use Illuminate\Http\UploadedFile;
  * @property UploadedFile $photo
  * @property string $slug
  *
- * @property InstrumentType $instrument
+ * @property InstrumentType $instrument_type
  */
 class UpdateRequest extends FormRequest
 {
@@ -30,16 +30,16 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name_uz' => 'required|string|max:255|unique:instrument_types,name_uz,' . $this->instrument->id . ',id',
-            'name_uz_cy' => 'required|string|max:255|unique:instrument_types,name_uz_cy,' . $this->instrument->id . ',id',
-            'name_ru' => 'required|string|max:255|unique:instrument_types,name_ru,' . $this->instrument->id . ',id',
-            'name_en' => 'required|string|max:255|unique:instrument_types,name_en,' . $this->instrument->id . ',id',
+            'name_uz' => 'required|string|max:255|unique:instrument_types,name_uz,' . $this->instrument_type->id . ',id',
+            'name_uz_cy' => 'required|string|max:255|unique:instrument_types,name_uz_cy,' . $this->instrument_type->id . ',id',
+            'name_ru' => 'required|string|max:255|unique:instrument_types,name_ru,' . $this->instrument_type->id . ',id',
+            'name_en' => 'required|string|max:255|unique:instrument_types,name_en,' . $this->instrument_type->id . ',id',
             'description_uz' => 'required|string',
             'description_uz_cy' => 'required|string',
             'description_ru' => 'required|string',
             'description_en' => 'required|string',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
-            'slug' => 'nullable|string|max:255|unique:instrument_types,slug,' . $this->instrument->id . ',id',
+            'slug' => 'nullable|string|max:255|unique:instrument_types,slug,' . $this->instrument_type->id . ',id',
         ];
     }
 }

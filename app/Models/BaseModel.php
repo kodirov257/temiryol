@@ -27,14 +27,20 @@ class BaseModel extends Model
                 if (self::hasColumn($model->table, 'updated_by')) {
                     $model->updated_by = $user->id;
                 }
-                $model->updated_at = Carbon::now();
+
+                if ($model->timestamps) {
+                    $model->updated_at = Carbon::now();
+                }
             });
 
             static::saving(function ($model) use ($user) {
                 if (self::hasColumn($model->table, 'updated_by')) {
                     $model->updated_by = $user->id;
                 }
-                $model->updated_at = Carbon::now();
+
+                if ($model->timestamps) {
+                    $model->updated_at = Carbon::now();
+                }
             });
         }
     }

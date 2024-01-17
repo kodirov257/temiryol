@@ -29,7 +29,7 @@ return new class extends Migration
         Schema::table('profiles', function (Blueprint $table) {
             $table->primary('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('department_id')->references('id')->on('departments')->onDelete('set null');
+            $table->foreign('department_id')->references('id')->on('department_departments')->onDelete('set null');
         });
 
         DB::table('profiles')->insert([

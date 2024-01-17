@@ -349,10 +349,22 @@ return [
             'can'  => 'manage-departments',
         ],
         [
-            'text' => 'instrument_types',
-            'url'  => '/dashboard/instrument-types',
-            'icon' => 'fas fa-fw fa-file',
-            'can'  => 'manage-instrument-types',
+            'text'    => 'instruments',
+            'icon'    => 'fas fa-fw fa-share',
+            'submenu' => [
+                [
+                    'text' => 'instrument_types',
+                    'url'  => '/dashboard/instrument-types',
+                    'icon' => 'fas fa-fw fa-file',
+                    'can'  => 'manage-instrument-types',
+                ],
+                [
+                    'text' => 'instruments',
+                    'url'  => '/dashboard/instruments',
+                    'icon' => 'fas fa-fw fa-file',
+                    'can'  => 'manage-instruments',
+                ],
+            ],
         ],
 //        [
 //            'text' => 'change_password',

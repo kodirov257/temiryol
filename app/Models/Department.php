@@ -45,7 +45,7 @@ class Department extends BaseModel
 {
     use /*HasFactory, */Sluggable;
 
-    protected $table = 'departments';
+    protected $table = 'department_departments';
 
     public int $depth;
 

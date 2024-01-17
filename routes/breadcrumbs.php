@@ -1,6 +1,8 @@
 <?php
 
 use App\Models\Department;
+use App\Models\Instrument\DepartmentInstrumentType;
+use App\Models\Instrument\Instrument;
 use App\Models\Instrument\InstrumentType;
 use App\Models\Organization;
 use App\Models\Region;
@@ -129,12 +131,17 @@ Breadcrumbs::for('dashboard.departments.employees.add.form', function (Crumbs $c
     $crumbs->push(trans('adminlte.department.add_employee'), route('dashboard.departments.employees.add.form', $department));
 });
 
+Breadcrumbs::for('dashboard.departments.instruments.create', function (Crumbs $crumbs, Department $department) {
+    $crumbs->parent('dashboard.departments.show', $department);
+    $crumbs->push(trans('adminlte.instrument.add'), route('dashboard.departments.instruments.create', $department));
+});
 
-// Instruments
+
+// Instrument Types
 
 Breadcrumbs::for('dashboard.instrument-types.index', function (Crumbs $crumbs) {
     $crumbs->parent('dashboard.home');
-    $crumbs->push(trans('menu.instruments'), route('dashboard.instrument-types.index'));
+    $crumbs->push(trans('menu.instrument_types'), route('dashboard.instrument-types.index'));
 });
 
 Breadcrumbs::for('dashboard.instrument-types.create', function (Crumbs $crumbs) {
@@ -150,4 +157,34 @@ Breadcrumbs::for('dashboard.instrument-types.show', function (Crumbs $crumbs, In
 Breadcrumbs::for('dashboard.instrument-types.edit', function (Crumbs $crumbs, InstrumentType $instrument) {
     $crumbs->parent('dashboard.instrument-types.show', $instrument);
     $crumbs->push(trans('adminlte.edit'), route('dashboard.instrument-types.edit', $instrument));
+});
+
+
+// Instruments
+
+Breadcrumbs::for('dashboard.instruments.index', function (Crumbs $crumbs) {
+    $crumbs->parent('dashboard.home');
+    $crumbs->push(trans('menu.instruments'), route('dashboard.instruments.index'));
+});
+
+Breadcrumbs::for('dashboard.department-instrument-types.instruments.index', function (Crumbs $crumbs, DepartmentInstrumentType $departmentInstrumentType) {
+    $crumbs->parent('dashboard.departments.show', $departmentInstrumentType->department);
+    $crumbs->push(trans('menu.instruments'), route('dashboard.department-instrument-types.instruments.index', $departmentInstrumentType));
+});
+
+Breadcrumbs::for('dashboard.department-instrument-types.instruments.create', function (Crumbs $crumbs, DepartmentInstrumentType $departmentInstrumentType) {
+    $crumbs->parent('dashboard.department-instrument-types.instruments.index', $departmentInstrumentType);
+    $crumbs->push(trans('adminlte.create'), route('dashboard.department-instrument-types.instruments.create', $departmentInstrumentType));
+});
+
+Breadcrumbs::for('dashboard.department-instrument-types.instruments.show', function (Crumbs $crumbs, DepartmentInstrumentType $departmentInstrumentType, Instrument $instrument) {
+    $crumbs->parent('dashboard.department-instrument-types.instruments.index', $departmentInstrumentType);
+    $crumbs->push($instrument->serial . ' - ' . $departmentInstrumentType->type->name,
+        route('dashboard.department-instrument-types.instruments.show', ['departmentInstrumentType' => $departmentInstrumentType, 'instrument' => $instrument]));
+});
+
+Breadcrumbs::for('dashboard.department-instrument-types.instruments.edit', function (Crumbs $crumbs, DepartmentInstrumentType $departmentInstrumentType, Instrument $instrument) {
+    $crumbs->parent('dashboard.department-instrument-types.instruments.show', $departmentInstrumentType, $instrument);
+    $crumbs->push(trans('adminlte.edit'),
+        route('dashboard.department-instrument-types.instruments.edit', ['departmentInstrumentType' => $departmentInstrumentType, 'instrument' => $instrument]));
 });

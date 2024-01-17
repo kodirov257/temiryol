@@ -95,7 +95,7 @@ class InstrumentType extends BaseModel
     ########################################### Relations
 
     /**
-     * @return BelongsToMany|DepartmentInstrumentType[]
+     * @return HasMany|DepartmentInstrumentType[]
      */
     public function instrumentDepartments(): HasMany|array
     {

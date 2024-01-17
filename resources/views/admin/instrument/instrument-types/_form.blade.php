@@ -27,7 +27,7 @@
                     <div class="tab-pane active" id="uzbek" role="tabpanel">
                         <div class="form-group">
                             {!! Html::label('Nomi', 'name_uz')->class('col-form-label') !!}
-                            {!! Html::text('name_uz', old('name_uz', $instrument->name_uz ?? null))->class('form-control' . ($errors->has('name_uz') ? ' is-invalid' : ''))->required() !!}
+                            {!! Html::text('name_uz', old('name_uz', $instrumentType->name_uz ?? null))->class('form-control' . ($errors->has('name_uz') ? ' is-invalid' : ''))->required() !!}
                             @if($errors->has('name_uz'))
                                 <span class="invalid-feedback"><strong>{{ $errors->first('name_uz') }}</strong></span>
                             @endif
@@ -35,7 +35,7 @@
                         <div class="form-group">
                             {!! Html::label('Tavsifi', 'description_uz')->class('col-form-label'); !!}
                             <br>
-                            {!! Html::textarea('description_uz', old('description_uz', $instrument->description_uz ?? null))
+                            {!! Html::textarea('description_uz', old('description_uz', $instrumentType->description_uz ?? null))
                                     ->class('form-control' . $errors->has('description_uz') ? ' is-invalid' : '')
                                     ->id('description_uz')->rows(10)->required(); !!}
                             @if ($errors->has('description_uz'))
@@ -47,7 +47,7 @@
                     <div class="tab-pane" id="uzbek-cyrill" role="tabpanel">
                         <div class="form-group">
                             {!! Html::label('Номи', 'name_uz_cy')->class('col-form-label') !!}
-                            {!! Html::text('name_uz_cy', old('name_uz_cy', $instrument->name_uz_cy ?? null))->class('form-control' . ($errors->has('name_uz_cy') ? ' is-invalid' : '')) !!}
+                            {!! Html::text('name_uz_cy', old('name_uz_cy', $instrumentType->name_uz_cy ?? null))->class('form-control' . ($errors->has('name_uz_cy') ? ' is-invalid' : '')) !!}
                             @if($errors->has('name_uz_cy'))
                                 <span class="invalid-feedback"><strong>{{ $errors->first('name_uz_cy') }}</strong></span>
                             @endif
@@ -55,7 +55,7 @@
                         <div class="form-group">
                             {!! Html::label('Тавсифи', 'description_uz_cy')->class('col-form-label'); !!}
                             <br>
-                            {!! Html::textarea('description_uz_cy', old('description_uz_cy', $instrument->description_uz_cy ?? null))
+                            {!! Html::textarea('description_uz_cy', old('description_uz_cy', $instrumentType->description_uz_cy ?? null))
                                 ->class('form-control' . $errors->has('description_uz_cy') ? ' is-invalid' : '')
                                 ->id('description_uz_cy')->rows(10)->required(); !!}
                             @if ($errors->has('description_uz_cy'))
@@ -67,7 +67,7 @@
                     <div class="tab-pane" id="russian" role="tabpanel">
                         <div class="form-group">
                             {!! Html::label('Название', 'name_ru')->class('col-form-label') !!}
-                            {!! Html::text('name_ru', old('name_ru', $instrument->name_ru ?? null))->class('form-control' . ($errors->has('name_ru') ? ' is-invalid' : ''))->required() !!}
+                            {!! Html::text('name_ru', old('name_ru', $instrumentType->name_ru ?? null))->class('form-control' . ($errors->has('name_ru') ? ' is-invalid' : ''))->required() !!}
                             @if($errors->has('name_ru'))
                                 <span class="invalid-feedback"><strong>{{ $errors->first('name_ru') }}</strong></span>
                             @endif
@@ -75,7 +75,7 @@
                         <div class="form-group">
                             {!! Html::label('Описание', 'description_ru')->class('col-form-label'); !!}
                             <br>
-                            {!! Html::textarea('description_ru', old('description_ru', $instrument->description_ru ?? null))
+                            {!! Html::textarea('description_ru', old('description_ru', $instrumentType->description_ru ?? null))
                                 ->class('form-control' . $errors->has('description_ru') ? ' is-invalid' : '')
                                 ->id('description_ru')->rows(10)->required(); !!}
                             @if ($errors->has('description_ru'))
@@ -87,7 +87,7 @@
                     <div class="tab-pane" id="english" role="tabpanel">
                         <div class="form-group">
                             {!! Html::label('Name', 'name_en')->class('col-form-label') !!}
-                            {!! Html::text('name_en', old('name_en', $instrument->name_en ?? null))->class('form-control' . ($errors->has('name_en') ? ' is-invalid' : ''))->required() !!}
+                            {!! Html::text('name_en', old('name_en', $instrumentType->name_en ?? null))->class('form-control' . ($errors->has('name_en') ? ' is-invalid' : ''))->required() !!}
                             @if($errors->has('name_en'))
                                 <span class="invalid-feedback"><strong>{{ $errors->first('name_en') }}</strong></span>
                             @endif
@@ -95,7 +95,7 @@
                         <div class="form-group">
                             {!! Html::label('Description', 'description_en')->class('col-form-label'); !!}
                             <br>
-                            {!! Html::textarea('description_en', old('description_en', $instrument->description_en ?? null))
+                            {!! Html::textarea('description_en', old('description_en', $instrumentType->description_en ?? null))
                                 ->class('form-control' . $errors->has('description_en') ? ' is-invalid' : '')
                                 ->id('description_en')->rows(10)->required(); !!}
                             @if ($errors->has('description_en'))
@@ -108,7 +108,7 @@
 
                 <div class="form-group">
                     {!! Html::label('Slug', 'slug')->class('col-form-label') !!}
-                    {!! Html::text('slug', old('slug', $instrument->slug ?? null))->class('form-control' . ($errors->has('slug') ? ' is-invalid' : '')) !!}
+                    {!! Html::text('slug', old('slug', $instrumentType->slug ?? null))->class('form-control' . ($errors->has('slug') ? ' is-invalid' : '')) !!}
                     @if ($errors->has('slug'))
                         <span class="invalid-feedback"><strong>{{ $errors->first('slug') }}</strong></span>
                     @endif
@@ -138,7 +138,7 @@
 </div>
 
 <div class="form-group">
-    <button type="submit" class="btn btn-primary">{{ trans('adminlte.' . ($instrument ? 'edit' : 'save')) }}</button>
+    <button type="submit" class="btn btn-primary">{{ trans('adminlte.' . ($instrumentType ? 'edit' : 'save')) }}</button>
 </div>
 
 @section($javaScriptSectionName)
@@ -159,7 +159,7 @@
         CKEDITOR.replace('description_en');
 
         let photoInput = $('#photo-input');
-        let photoUrl = '{{ $instrument && $instrument->photo ? $instrument->photoOriginal : null }}';
+        let photoUrl = '{{ $instrumentType && $instrumentType->photo ? $instrumentType->photoOriginal : null }}';
 
         let send = XMLHttpRequest.prototype.send, token = $('meta[name="csrf-token"]').attr('content');
         XMLHttpRequest.prototype.send = function(data) {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Manage;
+namespace App\Services\Manage\Department;
 
 use App\Helpers\LanguageHelper;
 use App\Http\Requests\Admin\Departments\CreateRequest;

@@ -7,6 +7,8 @@
                class="btn btn-success mr-1">{{ __('adminlte.department.add') }}</a>
             <a href="{{ route('dashboard.departments.employees.add.form', $department) }}"
                class="btn btn-dark mr-1">{{ __('adminlte.department.add_employee') }}</a>
+            <a href="{{ route('dashboard.departments.employees.add.form', ['department' => $department]) }}"
+                  class="btn btn-outline-dark mr-1">{{ __('adminlte.instrument.add') }}</a>
             <form method="POST" action="{{ route('dashboard.departments.destroy', $department) }}" class="mr-1">
                 @csrf
                 @method('DELETE')
@@ -180,8 +182,10 @@
         </div>
 
         <div class="card" id="instruments">
-            <div class="card-header card-green with-border">{{ __('menu.instrument_types') }}</div>
+            <div class="card-header card-green with-border">{{ __('menu.instruments') }}</div>
             <div class="card-body">
+                <p><a href="{{ route('dashboard.departments.instruments.create', ['department' => $department]) }}"
+                      class="btn btn-success">{{ __('adminlte.instrument.add') }}</a></p>
 
                 <table class="table table-bordered table-striped">
                     <thead>
@@ -191,10 +195,11 @@
                         <td>Номи</td>
                         <td>Название</td>
                         <td>{{ __('adminlte.quantity') }}</td>
+                        <td></td>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ($department->departmentInstrumentTypes()->with('instrument')->get() as $instrumentType)
+                    @foreach ($department->departmentInstrumentTypes()->with('type')->get() as $instrumentType)
                         <?php /* @var $instrumentType \App\Models\Instrument\DepartmentInstrumentType */ ?>
                         @php($type = $instrumentType->type)
 
@@ -216,6 +221,14 @@
                                 <a href="{{ route('dashboard.instrument-types.show', $instrumentType) }}">{{ $type->name_ru }}</a>
                             </td>
                             <td>{{ $instrumentType->quantity }}</td>
+                            <td>
+                                <a href="{{ route('dashboard.department-instrument-types.instruments.index', $instrumentType) }}" class="btn btn-primary mr-1">
+                                    <i class="glyphicon glyphicon-eye-open"></i>
+                                </a>
+                                <a href="{{ route('dashboard.department-instrument-types.instruments.create', $instrumentType) }}" class="btn btn-success mr-1">
+                                    <i class="glyphicon glyphicon-plus"></i> Create
+                                </a>
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>

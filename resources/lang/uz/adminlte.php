@@ -135,5 +135,13 @@ return [
     'instrument' => [
         'add' => 'Asbob-uskuna qo`shmoq',
         'name' => 'Asbob-uskuna',
+        'unavailable' => 'Mavjud emas',
+        'broken' => 'Buzilgan',
+        'available' => 'Mavjud',
+        'in_use' => 'Ishlatilmoqda',
+        'not_returned' => 'Qaytarilmagan',
+        'repaired' => 'Ta`mirlangan',
+        'serial' => 'Seriya Raqami',
+        'notes' => 'Eslatmalar',
     ],
 ];

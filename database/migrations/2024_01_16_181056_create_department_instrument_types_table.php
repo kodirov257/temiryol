@@ -12,15 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('department_instrument_types', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('type_id');
             $table->unsignedInteger('department_id');
             $table->integer('quantity')->default(0);
         });
 
         Schema::table('department_instrument_types', function (Blueprint $table) {
-            $table->primary(['type_id', 'department_id']);
+            $table->unique(['type_id', 'department_id']);
             $table->foreign('type_id')->references('id')->on('instrument_types')->onDelete('restrict');
-            $table->foreign('department_id')->references('id')->on('departments')->onDelete('restrict');
+            $table->foreign('department_id')->references('id')->on('department_departments')->onDelete('restrict');
         });
     }
 

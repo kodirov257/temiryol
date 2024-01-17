@@ -5,7 +5,7 @@
 
             @include('partials.admin._nav')
 
-            @include('admin.instruments._form', ['instrument' => null])
+            @include('admin.instrument.instrument-types._form', ['instrumentType' => null])
         </form>
     @endsection
 </x-admin-page-layout>
