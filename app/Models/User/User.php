@@ -2,11 +2,13 @@
 
 namespace App\Models\User;
 
+use App\Models\Instrument\Operation;
 use Carbon\Carbon;
 use Eloquent;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -28,6 +30,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property Carbon $updated_at
  *
  * @property Profile $profile
+ * @property Operation[] $operations
  *
  * @mixin Eloquent
  */
@@ -167,9 +170,9 @@ class User extends Authenticatable implements MustVerifyEmail
     public static function statusesList(): array
     {
         return [
-            self::STATUS_WAIT => trans('adminlte.user.waiting'),
-            self::STATUS_ACTIVE => trans('adminlte.user.active'),
-            self::STATUS_BLOCKED => trans('adminlte.user.blocked'),
+            self::STATUS_WAIT => trans('adminlte.waiting'),
+            self::STATUS_ACTIVE => trans('adminlte.active'),
+            self::STATUS_BLOCKED => trans('adminlte.blocked'),
         ];
     }
 
@@ -179,6 +182,14 @@ class User extends Authenticatable implements MustVerifyEmail
     public function profile(): HasOne|Profile
     {
         return $this->hasOne(Profile::class, 'user_id', 'id');
+    }
+
+    /**
+     * @return HasMany|Operation[]
+     */
+    public function operations(): HasMany|array
+    {
+        return $this->hasMany(Operation::class, 'borrower_id', 'id');
     }
 
     ###########################################

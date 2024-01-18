@@ -61,11 +61,11 @@
                     <td>{{ $user->roleName() }}</td>
                     <td>
                         @if($user->status === \App\Models\User\User::STATUS_WAIT)
-                            <span class="badge badge-secondary">{{ trans('adminlte.user.waiting') }}</span>
+                            <span class="badge badge-secondary">{{ trans('adminlte.waiting') }}</span>
                         @elseif($user->status === \App\Models\User\User::STATUS_ACTIVE)
-                            <span class="badge badge-primary">{{ trans('adminlte.user.active') }}</span>
+                            <span class="badge badge-primary">{{ trans('adminlte.active') }}</span>
                         @elseif($user->status === \App\Models\User\User::STATUS_BLOCKED)
-                            <span class="badge badge-danger">{{ trans('adminlte.user.blocked') }}</span>
+                            <span class="badge badge-danger">{{ trans('adminlte.blocked') }}</span>
                         @endif
                     </td>
                 </tr>

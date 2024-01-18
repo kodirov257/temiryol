@@ -32,7 +32,7 @@
             <tr>
                 <td>{{ __('adminlte.instrument.serial') }}</td>
                 <td>{{ __('adminlte.status') }}</td>
-                <td>{{ __('adminlte.instrument.notes') }}</td>
+                <td>{{ __('adminlte.notes') }}</td>
             </tr>
             </thead>
             <tbody>

@@ -83,5 +83,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('manage-instruments', function (User $user) {
             return $user->isAdmin();
         });
+
+        Gate::define('manage-operations', function (User $user) {
+            return $user->isAdmin() || $user->isAccountant() || $user->isWorker();
+        });
     }
 }

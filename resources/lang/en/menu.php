@@ -24,4 +24,5 @@ return [
     'departments'                   => 'Departments',
     'instrument_types'              => 'Instrument Types',
     'instruments'                   => 'Instruments',
+    'operations'                    => 'Operations',
 ];

@@ -24,12 +24,12 @@
                                 <th>{{ trans('adminlte.status') }}</th>
                                 <td>
                                     @if ($user->status === \App\Models\User\User::STATUS_WAIT)
-                                        <span class="badge badge-secondary">Waiting</span>
+                                        <span class="badge badge-secondary">{{ trans('adminlte.waiting') }}</span>
                                     @endif
                                     @if ($user->status === \App\Models\User\User::STATUS_ACTIVE)
-                                        <span class="badge badge-primary">Active</span>
+                                        <span class="badge badge-primary">{{ trans('adminlte.active') }}</span>
                                     @elseif($user->status === \App\Models\User\User::STATUS_BLOCKED)
-                                        <span class="badge badge-danger">{{ trans('adminlte.user.blocked') }}</span>
+                                        <span class="badge badge-danger">{{ trans('adminlte.blocked') }}</span>
                                     @endif
                                 </td>
                             </tr>

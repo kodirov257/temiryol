@@ -4,6 +4,7 @@ use App\Models\Department;
 use App\Models\Instrument\DepartmentInstrumentType;
 use App\Models\Instrument\Instrument;
 use App\Models\Instrument\InstrumentType;
+use App\Models\Instrument\Operation;
 use App\Models\Organization;
 use App\Models\Region;
 use App\Models\User\User;
@@ -187,4 +188,47 @@ Breadcrumbs::for('dashboard.department-instrument-types.instruments.edit', funct
     $crumbs->parent('dashboard.department-instrument-types.instruments.show', $departmentInstrumentType, $instrument);
     $crumbs->push(trans('adminlte.edit'),
         route('dashboard.department-instrument-types.instruments.edit', ['departmentInstrumentType' => $departmentInstrumentType, 'instrument' => $instrument]));
+});
+
+
+// Operations
+
+Breadcrumbs::for('dashboard.operations.index', function (Crumbs $crumbs) {
+    $crumbs->parent('dashboard.home');
+    $crumbs->push(trans('menu.operations'), route('dashboard.operations.index'));
+});
+
+Breadcrumbs::for('dashboard.instruments.operations.index', function (Crumbs $crumbs, Instrument $instrument) {
+    $crumbs->parent('dashboard.department-instrument-types.instruments.show', $instrument->departmentInstrumentType, $instrument);
+    $crumbs->push(trans('menu.operations'), route('dashboard.instruments.operations.index', $instrument));
+});
+
+Breadcrumbs::for('dashboard.instruments.operations.rent.form', function (Crumbs $crumbs, Instrument $instrument) {
+    $crumbs->parent('dashboard.instruments.operations.index', $instrument);
+    $crumbs->push(trans('adminlte.rent'), route('dashboard.instruments.operations.rent.form', $instrument));
+});
+
+Breadcrumbs::for('dashboard.instruments.operations.show', function (Crumbs $crumbs, Instrument $instrument, Operation $operation) {
+    if ($parent = $operation->parent) {
+        $crumbs->parent('dashboard.instruments.operations.show', $instrument, $parent);
+    } else {
+        $crumbs->parent('dashboard.instruments.operations.show', $instrument);
+    }
+    $crumbs->parent('dashboard.instruments.operations.index', $instrument);
+    $crumbs->push($operation->id, route('dashboard.instruments.operations.show', ['instrument' => $instrument, 'operation' => $operation]));
+});
+
+Breadcrumbs::for('dashboard.instruments.operations.prolong.form', function (Crumbs $crumbs, Instrument $instrument, Operation $operation) {
+    $crumbs->parent('dashboard.instruments.operations.show', $instrument, $operation);
+    $crumbs->push(trans('adminlte.prolong'), route('dashboard.instruments.operations.prolong.form', ['instrument' => $instrument, 'operation' => $operation]));
+});
+
+Breadcrumbs::for('dashboard.instruments.operations.close.form', function (Crumbs $crumbs, Instrument $instrument, Operation $operation) {
+    $crumbs->parent('dashboard.instruments.operations.show', $instrument, $operation);
+    $crumbs->push(trans('adminlte.close'), route('dashboard.instruments.operations.close.form', ['instrument' => $instrument, 'operation' => $operation]));
+});
+
+Breadcrumbs::for('dashboard.instruments.operations.edit', function (Crumbs $crumbs, Instrument $instrument, Operation $operation) {
+    $crumbs->parent('dashboard.instruments.operations.show', $instrument, $operation);
+    $crumbs->push(trans('adminlte.edit'), route('dashboard.instruments.operations.edit', ['instrument' => $instrument, 'operation' => $operation]));
 });

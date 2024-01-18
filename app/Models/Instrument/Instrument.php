@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Carbon $updated_at
  *
  * @property DepartmentInstrumentType $departmentInstrumentType
+ * @property Operation[] $operations
  * @property User $createdBy
  * @property User $updatedBy
  *
@@ -78,7 +79,7 @@ class Instrument extends BaseModel
         return self::statusList()[$this->type];
     }
 
-    public function lend(?string $notes = null): void
+    public function rent(?string $notes = null): void
     {
         $this->status = self::STATUS_IN_USE;
         if ($notes) {
@@ -102,12 +103,50 @@ class Instrument extends BaseModel
         }
     }
 
+    public function isAvailable(): bool
+    {
+        return $this->status === self::STATUS_AVAILABLE;
+    }
+
+    public function isInUse(): bool
+    {
+        return $this->status === self::STATUS_IN_USE;
+    }
+
+    public function isNotReturned(): bool
+    {
+        return $this->status === self::STATUS_NOT_RETURNED;
+    }
+
+    public function isBroken(): bool
+    {
+        return $this->status === self::STATUS_BROKEN;
+    }
+
+    public function isRepaired(): bool
+    {
+        return $this->status === self::STATUS_REPAIRED;
+    }
+
+    public function isUnavailable(): bool
+    {
+        return $this->status === self::STATUS_UNAVAILABLE;
+    }
+
 
     ########################################### Relations
 
     public function departmentInstrumentType(): BelongsTo|DepartmentInstrumentType
     {
         return $this->belongsTo(DepartmentInstrumentType::class, 'instrument_type_id', 'id');
+    }
+
+    /**
+     * @return HasMany|Operation[]
+     */
+    public function operations(): HasMany|array
+    {
+        return $this->hasMany(Operation::class, 'instrument_id', 'id');
     }
 
     public function createdBy(): BelongsTo|User

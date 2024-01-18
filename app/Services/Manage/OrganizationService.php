@@ -57,7 +57,7 @@ class OrganizationService
             $companies = [$organization];
         } else {
             $companies = Organization::with(['children', 'region'])->whereNull('parent_id')
-                ->orderByDesc('name_' . LanguageHelper::getCurrentLanguagePrefix())->get();
+                ->orderBy('name_' . LanguageHelper::getCurrentLanguagePrefix())->get();
         }
         $organizations = [];
         foreach ($companies as $company) {

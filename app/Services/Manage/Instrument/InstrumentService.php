@@ -70,14 +70,14 @@ class InstrumentService
     /**
      * @throws \Throwable
      */
-    public function lend(int $id, int $departmentInstrumentTypeId, ?string $notes = null): void
+    public function rent(int $id, int $departmentInstrumentTypeId, ?string $notes = null): void
     {
         $departmentInstrumentType = DepartmentInstrumentType::findOrFail($departmentInstrumentTypeId);
         $instrument = Instrument::findOrFail($id);
 
         DB::beginTransaction();
         try {
-            $instrument->lend($notes);
+            $instrument->rent($notes);
             $instrument->saveOrFail();
 
             $departmentInstrumentType->updateOrFail([

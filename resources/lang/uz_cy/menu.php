@@ -24,4 +24,5 @@ return [
     'departments'                   => 'Бўлимлар',
     'instrument_types'              => 'Асбоб-ускуналар турлари',
     'instruments'                   => 'Асбоб-ускуналар',
+    'operations'                    => 'Операциялар',
 ];

@@ -78,7 +78,20 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
                 Route::get('destroy', 'InstrumentController@destroyForm')->name('destroy.form');
             });
         });
-        Route::get('instruments', 'InstrumentController@index')->name('instruments.index');
+        Route::get('instruments', 'Instrument\InstrumentController@indexAll')->name('instruments.index');
+
+        Route::group(['prefix' => 'instruments/{instrument}', 'namespace' => 'Instrument', 'as' => 'instruments.'], function () {
+            Route::get('operations/rent', 'OperationController@rentForm')->name('operations.rent.form');
+            Route::post('operations/rent', 'OperationController@rent')->name('operations.rent');
+            Route::resource('operations', 'OperationController')->except(['create', 'store', 'destroy']);
+            Route::group(['prefix' => 'operations/{operation}', 'as' => 'operations.'], function () {
+                Route::get('prolong', 'OperationController@prolongForm')->name('prolong.form');
+                Route::post('prolong', 'OperationController@prolong')->name('prolong');
+                Route::get('close', 'OperationController@closeForm')->name('close.form');
+                Route::post('close', 'OperationController@close')->name('close');
+            });
+        });
+        Route::get('operations', 'Instrument\OperationController@indexAll')->name('operations.index');
 
         Route::post('/darkmode/toggle', [DarkModeController::class, 'toggle'])
             ->name('darkmode.toggle');

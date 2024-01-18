@@ -86,7 +86,7 @@ class DepartmentService
             $departments = [$department];
         } else {
             $departments = Department::with(['children', 'organization'])->whereNull('parent_id')
-                ->orderByDesc('name_' . LanguageHelper::getCurrentLanguagePrefix())->get();
+                ->orderBy('name_' . LanguageHelper::getCurrentLanguagePrefix())->get();
         }
         $result = [];
         foreach ($departments as $value) {

@@ -51,7 +51,7 @@
                 </div>
 
                 <div class="form-group">
-                    {!! Html::label(__('adminlte.instrument.notes'), 'notes')->class('col-form-label'); !!}
+                    {!! Html::label(__('adminlte.notes'), 'notes')->class('col-form-label'); !!}
                     <br>
                     {!! Html::textarea('notes', old('notes', $instrument->notes ?? null))
                             ->class('form-control' . $errors->has('notes') ? ' is-invalid' : '')

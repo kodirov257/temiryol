@@ -4,6 +4,14 @@
             <a href="{{ route('dashboard.department-instrument-types.instruments.edit', ['departmentInstrumentType' => $departmentInstrumentType, 'instrument' => $instrument]) }}" class="btn btn-primary mr-1">
                 {{ __('adminlte.edit') }}
             </a>
+            @if($instrument->isAvailable() || $instrument->isRepaired())
+                <a href="{{ route('dashboard.instruments.operations.rent.form', $instrument) }}" class="btn btn-success mr-1">
+                    {{ __('adminlte.rent') }}
+                </a>
+            @endif
+            <a href="{{ route('dashboard.instruments.operations.index', $instrument) }}" class="btn btn-dark mr-1">
+                {{ __('menu.operations') }}
+            </a>
             <a href="{{ route('dashboard.department-instrument-types.instruments.destroy.form', ['departmentInstrumentType' => $departmentInstrumentType, 'instrument' => $instrument]) }}" class="btn btn-danger mr-1">
                 {{ __('adminlte.delete') }}
             </a>
@@ -27,7 +35,7 @@
                             </tr>
                             <tr><th>{{ __('adminlte.instrument.serial') }}</th><td>{{ $instrument->serial }}</td></tr>
                             <tr><th>{{ __('adminlte.status') }}</th><td>{!! $instrument->statusLabel() !!}</td></tr>
-                            <tr><th>{{ __('adminlte.instrument.notes') }}</th><td>{{ $instrument->notes }}</td></tr>
+                            <tr><th>{{ __('adminlte.notes') }}</th><td>{!! $instrument->notes !!}</td></tr>
                             </tbody>
                         </table>
                     </div>

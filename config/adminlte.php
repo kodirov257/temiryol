@@ -364,6 +364,12 @@ return [
                     'icon' => 'fas fa-fw fa-file',
                     'can'  => 'manage-instruments',
                 ],
+                [
+                    'text' => 'operations',
+                    'url'  => '/dashboard/operations',
+                    'icon' => 'fas fa-fw fa-file',
+                    'can'  => 'manage-operations',
+                ],
             ],
         ],
 //        [
