@@ -134,7 +134,7 @@ class OperationController extends Controller
 
     public function show(Instrument $instrument, Operation $operation): View
     {
-        $relatedOperations = Operation::where('unique_id', $operation)
+        $relatedOperations = Operation::where('unique_id', $operation->unique_id)
             ->whereNot('id', $operation->id)->orderBy('id')->get();
 
         return view('admin.instrument.operations.show', compact('instrument', 'operation', 'relatedOperations'));

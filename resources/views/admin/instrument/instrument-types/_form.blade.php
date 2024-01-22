@@ -148,6 +148,7 @@
     <script src="{{ asset('vendor/bootstrap-fileinput/js/fileinput.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap-fileinput/themes/fa/theme.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap-fileinput/js/locales/uz.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap-fileinput/js/locales/uz-Cy.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap-fileinput/js/locales/ru.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap-fileinput/js/locales/LANG.js') }}"></script>
     <script src="{{ asset('vendor/ckeditor/ckeditor.js') }}"></script>
@@ -178,6 +179,7 @@
                 deleteUrl: 'remove-photo',
                 maxFileCount: 1,
                 allowedFileExtensions: ['jpg', 'jpeg', 'png'],
+                language: '{{ App::getLocale() }}',
             });
         } else {
             photoInput.fileinput({
@@ -186,6 +188,7 @@
                 browseOnZoneClick: true,
                 maxFileCount: 1,
                 allowedFileExtensions: ['jpg', 'jpeg', 'png'],
+                language: '{{ App::getLocale() }}',
             });
         }
 

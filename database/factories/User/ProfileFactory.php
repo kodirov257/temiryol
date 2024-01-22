@@ -3,6 +3,7 @@
 namespace Database\Factories\User;
 
 use App\Models\User\Profile;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -24,6 +25,8 @@ class ProfileFactory extends Factory
             'birth_date' => fake()->date('Y-m-d H:i:s'),
             'gender' => $gender,
             'address' => fake()->address,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ];
     }
 }

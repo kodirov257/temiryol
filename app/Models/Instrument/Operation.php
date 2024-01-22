@@ -7,6 +7,7 @@ use App\Models\Department;
 use App\Models\User\User;
 use Carbon\Carbon;
 use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -38,6 +39,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property User $createdBy
  * @property User $updatedBy
  *
+ * @method Builder|self active()
+ *
  * @mixin Eloquent
  */
 class Operation extends BaseModel
@@ -53,7 +56,8 @@ class Operation extends BaseModel
     protected $table = 'instrument_operations';
 
     protected $fillable = [
-        'borrower_id', 'instrument_id', 'serial', 'parent_id', 'unique_id', 'type', 'status', 'instrument_status', 'deadline', 'notes',
+        'borrower_id', 'instrument_id', 'department_id', 'instrument_type_id', 'serial', 'parent_id', 'unique_id',
+        'type', 'status', 'instrument_status', 'deadline', 'notes',
     ];
 
     protected $hidden = ['unique_id'];
@@ -108,10 +112,25 @@ class Operation extends BaseModel
         return $this->status === self::STATUS_PROLONGED;
     }
 
+    public function isActive(): bool
+    {
+        return in_array($this->status, [self::STATUS_ACTIVE, self::STATUS_PROLONGED]);
+    }
+
     public function isClosed(): bool
     {
         return $this->status === self::STATUS_CLOSED;
     }
+
+
+    ########################################### Scopes
+
+    public function scopeActive(Builder $query): Builder|self
+    {
+        return $query->whereIn('status', [self::STATUS_ACTIVE, self::STATUS_PROLONGED]);
+    }
+
+    ###########################################
 
 
     ########################################### Relations

@@ -212,9 +212,8 @@ Breadcrumbs::for('dashboard.instruments.operations.show', function (Crumbs $crum
     if ($parent = $operation->parent) {
         $crumbs->parent('dashboard.instruments.operations.show', $instrument, $parent);
     } else {
-        $crumbs->parent('dashboard.instruments.operations.show', $instrument);
+        $crumbs->parent('dashboard.instruments.operations.index', $instrument);
     }
-    $crumbs->parent('dashboard.instruments.operations.index', $instrument);
     $crumbs->push($operation->id, route('dashboard.instruments.operations.show', ['instrument' => $instrument, 'operation' => $operation]));
 });
 

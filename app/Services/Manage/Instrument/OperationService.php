@@ -37,7 +37,7 @@ class OperationService
                 'serial' => $instrument->serial,
                 'type' => Operation::TYPE_RENT,
                 'status' => Operation::STATUS_ACTIVE,
-                'instrument_status' => $instrument->status,
+                'instrument_status' => Instrument::STATUS_IN_USE,
                 'deadline' => $request->deadline_date . ' ' . $request->deadline_time . ':00',
                 'unique_id' => Str::random(10) . '_' . time(),
                 'notes' => $request->notes,
@@ -49,6 +49,8 @@ class OperationService
             $departmentInstrumentType->updateOrFail([
                 'quantity' => $departmentInstrumentType->quantity - 1,
             ]);
+
+            DB::commit();
 
             return $operation;
         } catch (\Exception|\Throwable $e) {
@@ -72,7 +74,7 @@ class OperationService
                 'notes' => $request->notes,
             ]);
 
-            return Operation::create([
+            $operation = Operation::create([
                 'instrument_id' => $oldOperation->instrument_id,
                 'borrower_id' => $oldOperation->borrower_id,
                 'department_id' => $instrument->departmentInstrumentType->department_id,
@@ -86,6 +88,10 @@ class OperationService
                 'unique_id' => $oldOperation->unique_id,
                 'notes' => $request->notes,
             ]);
+
+            DB::commit();
+
+            return $operation;
         } catch (\Exception|\Throwable $e) {
             DB::rollBack();
             throw $e;
@@ -116,6 +122,8 @@ class OperationService
                     'quantity' => $departmentInstrumentType->quantity + 1,
                 ]);
             }
+
+            DB::commit();
 
             return $operation;
         } catch (\Exception|\Throwable $e) {

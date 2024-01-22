@@ -54,7 +54,7 @@
                             <tr><th>{{ __('adminlte.status') }}</th><td>{!! $operation->statusLabel() !!}</td></tr>
                             <tr>
                                 <th>{{ __('adminlte.operation.instrument_status') }}</th>
-                                <td>{!! \App\Helpers\InstrumentHelper::statusLabel($operation->status) !!}</td>
+                                <td>{!! \App\Helpers\InstrumentHelper::statusLabel($operation->instrument_status) !!}</td>
                             </tr>
                             <tr><th>{{ __('adminlte.notes') }}</th><td>{!! $operation->notes !!}</td></tr>
                             <tr>
@@ -63,7 +63,7 @@
                                     @foreach($relatedOperations as $relatedOperation)
                                         <a href="{{ route('dashboard.instruments.operations.show', ['instrument' => $instrument, 'operation' => $relatedOperation]) }}">
                                             {{ $relatedOperation->id }} - {{ $relatedOperation->serial }}
-                                        </a> ->
+                                        </a> @if($relatedOperations->count() > 1) ->@endif
                                         <br>
                                     @endforeach
                                 </td>
