@@ -50,6 +50,7 @@ class Operation extends BaseModel
 
     public const STATUS_ACTIVE = 1;
     public const STATUS_PROLONGED = 2;
+    public const STATUS_EXPIRING = 4;
     public const STATUS_EXPIRED = 5;
     public const STATUS_CLOSED = 9;
 
@@ -87,6 +88,7 @@ class Operation extends BaseModel
             self::STATUS_ACTIVE => trans('adminlte.active'),
             self::STATUS_PROLONGED => trans('adminlte.prolonged'),
             self::STATUS_EXPIRED => trans('adminlte.expired'),
+            self::STATUS_EXPIRING => trans('adminlte.expiring'),
             self::STATUS_CLOSED => trans('adminlte.closed'),
         ];
     }
@@ -95,8 +97,9 @@ class Operation extends BaseModel
     {
         return match ($this->status) {
             self::STATUS_ACTIVE => '<span class="badge badge-success">' . __('adminlte.active') . '</span>',
-            self::STATUS_PROLONGED => '<span class="badge badge-warning">' . __('adminlte.prolonged') . '</span>',
-            self::STATUS_EXPIRED => '<span class="badge badge-danger">' . __('adminlte.expired') . '</span>',
+            self::STATUS_PROLONGED => '<span class="badge badge-secondary">' . __('adminlte.prolonged') . '</span>',
+            self::STATUS_EXPIRING => '<span class="badge badge-warning">' . __('adminlte.expired') . '</span>',
+            self::STATUS_EXPIRED => '<span class="badge badge-danger">' . __('adminlte.expiring') . '</span>',
             self::STATUS_CLOSED => '<span class="badge badge-primary">' . __('adminlte.closed') . '</span>',
             default => '<span class="badge badge-danger">Default</span>',
         };

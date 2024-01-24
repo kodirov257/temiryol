@@ -82,6 +82,7 @@ return [
     'active' => 'Active',
     'blocked' => 'Blocked',
     'prolonged' => 'Prolonged',
+    'expiring' => 'Expiring',
     'expired' => 'Expired',
     'closed' => 'Closed',
 

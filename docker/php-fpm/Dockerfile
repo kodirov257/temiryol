@@ -18,8 +18,17 @@ RUN echo 'memory_limit=512M' >> /usr/local/etc/php/conf.d/php.ini
 RUN apk update \
     && apk add --no-cache $PHPIZE_DEPS
 
+COPY cron_commands /etc/cron.d/cron-commands
+
+RUN chmod 0644 /etc/cron.d/cron-commands
+
+RUN crontab /etc/cron.d/cron-commands
+
+RUN touch /var/log/cron.log
+
 COPY ./xdebug.ini "${PHP_INI_DIR}/conf.d"
 COPY ./error_reporting.ini "${PHP_INI_DIR}/conf.d"
 
 EXPOSE 9000
-CMD ["php-fpm", "-F"]
+#CMD ["php-fpm", "-F"]
+CMD php-fpm & crond -l 2 -f

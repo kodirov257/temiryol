@@ -82,6 +82,7 @@ return [
     'active' => 'Faol',
     'blocked' => 'Bloklangan',
     'prolonged' => 'Uzaytirilgan',
+    'expiring' => 'Muddati tugayotgan',
     'expired' => 'Muddati tugagan',
     'closed' => 'Yopilgan',
 
