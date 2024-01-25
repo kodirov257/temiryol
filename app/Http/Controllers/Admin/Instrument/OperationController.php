@@ -12,6 +12,7 @@ use App\Models\Department;
 use App\Models\Instrument\Instrument;
 use App\Models\Instrument\InstrumentType;
 use App\Models\Instrument\Operation;
+use App\Models\User\User;
 use App\Services\Manage\Instrument\OperationService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -38,6 +39,26 @@ class OperationController extends Controller
     {
         $query = Operation::with('instrument.departmentInstrumentType.type')->orderByDesc('updated_at');
 
+        if (!empty($value = $request->get('filter'))) {
+            switch ($value) {
+                case 'active':
+                    $query->whereIn('status', [Operation::STATUS_ACTIVE, Operation::STATUS_PROLONGED]);
+                    break;
+                case 'prolonged':
+                    $query->where('status', Operation::STATUS_PROLONGED);
+                    break;
+                case 'expiring':
+                    $query->where('status', Operation::STATUS_EXPIRING);
+                    break;
+                case 'expired':
+                    $query->where('status', Operation::STATUS_EXPIRED);
+                    break;
+                case 'closed':
+                    $query->where('status', Operation::STATUS_CLOSED);
+                    break;
+            }
+        }
+
         if (!empty($value = $request->get('type'))) {
             $query->where('type', $value);
         }
@@ -58,16 +79,28 @@ class OperationController extends Controller
                 ->pluck('name_' . LanguageHelper::getCurrentLanguagePrefix(), 'id')->toArray();
         }
 
+        $defaultUser = [];
+        if (!empty($value = $request->get('worker_id'))) {
+            $query->where('borrower_id', $value);
+
+            $defaultUser = User::selectRaw("concat(users.name, '; ', p.last_name, ' ', coalesce(p.middle_name, ''), ' ', p.first_name) as name, users.id")
+                ->leftJoin('profiles as p', 'p.user_id', '=', 'users.id')
+                ->where('id', $value)->get()
+                ->pluck('name', 'id')->toArray();
+        }
+
         $operations = $query->paginate(20)
+            ->appends('filter', $request->get('filter'))
             ->appends('type', $request->get('type'))
             ->appends('instrument_type', $request->get('instrument_type'))
             ->appends('department', $request->get('department'))
+            ->appends('worker_id', $request->get('worker_id'))
             ->appends('serial', $request->get('serial'));
 
         $types = InstrumentType::orderBy('name_' . LanguageHelper::getCurrentLanguagePrefix())
             ->pluck('name_' . LanguageHelper::getCurrentLanguagePrefix(), 'id')->toArray();
 
-        return view('admin.instrument.operations.index-all', compact('operations', 'types', 'defaultDepartment'));
+        return view('admin.instrument.operations.index-all', compact('operations', 'types', 'defaultDepartment', 'defaultUser'));
     }
 
     public function rentForm(Instrument $instrument): View

@@ -16,7 +16,8 @@ class ExpiredInstruments extends Command
     {
         $this->line('<fg=cyan>Expired operations.</>');
 
-        $operations = Operation::active()->where('deadline', '<=', Carbon::now())->get();
+        $operations = Operation::active()->whereNotIn('status', [Operation::STATUS_CLOSED, Operation::STATUS_EXPIRED])
+            ->where('deadline', '<=', Carbon::now())->get();
         try {
             foreach ($operations as $operation) {
                 $operation->updateOrFail([

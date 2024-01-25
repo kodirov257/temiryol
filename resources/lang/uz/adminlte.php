@@ -85,6 +85,7 @@ return [
     'expiring' => 'Muddati tugayotgan',
     'expired' => 'Muddati tugagan',
     'closed' => 'Yopilgan',
+    'all' => 'Barchasi',
 
     'user' => [
         'name'  => 'Foydalanuvchi nomi',

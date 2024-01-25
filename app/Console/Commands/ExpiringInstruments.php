@@ -15,7 +15,8 @@ class ExpiringInstruments extends Command
     public function handle(): void
     {
         echo 'Expiring operations.' . PHP_EOL;
-        $operations = Operation::active()->where('deadline', '<=', Carbon::now()->addHour())->get();
+        $operations = Operation::active()->whereNotIn('status', [Operation::STATUS_CLOSED, Operation::STATUS_EXPIRING, Operation::STATUS_EXPIRED])
+            ->where('deadline', '<=', Carbon::now()->addHour())->get();
 
         try {
             foreach ($operations as $operation) {

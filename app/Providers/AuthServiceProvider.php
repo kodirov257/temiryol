@@ -61,7 +61,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::define('admin-panel', function (User $user) {
-            return $user->isAdmin();
+            return $user->isAdmin() || $user->isAccountant() || $user->isWorker();
         });
 
         Gate::define('manage-regions', function (User $user) {
@@ -84,7 +84,7 @@ class AuthServiceProvider extends ServiceProvider
             return $user->isAdmin();
         });
 
-        Gate::define('manage-operations', function (User $user) {
+        Gate::define('manage-operations-all', function (User $user) {
             return $user->isAdmin() || $user->isAccountant() || $user->isWorker();
         });
     }

@@ -368,7 +368,7 @@ return [
                     'text' => 'operations',
                     'url'  => '/dashboard/operations',
                     'icon' => 'fas fa-fw fa-file',
-                    'can'  => 'manage-operations',
+                    'can'  => 'manage-operations-all',
                 ],
             ],
         ],

@@ -85,6 +85,7 @@ return [
     'expiring' => 'Expiring',
     'expired' => 'Expired',
     'closed' => 'Closed',
+    'all' => 'All',
 
     'user' => [
         'name'  => 'Username',
