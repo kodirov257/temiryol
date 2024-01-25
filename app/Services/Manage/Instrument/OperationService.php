@@ -111,8 +111,19 @@ class OperationService
         try {
             $operation->updateOrFail([
                 'status' => Operation::STATUS_CLOSED,
+                'instrument_status' => $request->instrument_status,
                 'notes' => $request->notes,
             ]);
+
+            if ($parentOperation = $operation->parent) {
+                while ($parentOperation->parent_id) {
+                    if ($parentOperation->instrument_status === Instrument::STATUS_IN_USE) {
+                        $parentOperation->update([
+                            'instrument_status' => $request->instrument_status,
+                        ]);
+                    }
+                }
+            }
 
             $instrument->return($request->instrument_status);
             $instrument->saveOrFail();
